@@ -1,0 +1,9 @@
+debug: false
+
+spring:
+  profiles:
+    active: work
+
+mybatis:
+    mapper-locations: classpath*:mybatis/*/*.xml
+    type-aliases-package: org.leesia.entity
