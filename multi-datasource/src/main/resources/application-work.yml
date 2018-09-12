@@ -1,48 +1,18 @@
 spring:
   profiles: work
   application:
-    name: people-resources
+    name: multi-datasource
   datasource:
     ds1:
-      name: leesia
-      url: jdbc:mysql://192.168.56.11:3306/people?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=Hongkong
+      jdbc-url: jdbc:mysql://192.168.56.11:3306/people?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=Hongkong
       username: root
       password: mysql
-      type: com.alibaba.druid.pool.DruidDataSource
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: true
-      maxOpenPreparedStatements: 20
+      driverClassName: com.mysql.cj.jdbc.Driver
     ds2:
-      name: leesia
-      url: jdbc:mysql://192.168.56.11:3306/people?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=Hongkong
+      jdbc-url: jdbc:mysql://192.168.56.11:3306/people?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=Hongkong
       username: root
       password: mysql
-      type: com.alibaba.druid.pool.DruidDataSource
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: true
-      maxOpenPreparedStatements: 20
+      driverClassName: com.mysql.cj.jdbc.Driver
 
 mybatis:
   mapper-locations: classpath*:mybatis/*/*.xml

@@ -10,6 +10,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -24,7 +25,7 @@ import javax.sql.DataSource;
 public class DataSource1Config {
 
     /**
-     * 配置test1数据库
+     * 配置ds1数据库
      */
     @Bean(name = "ds1DataSource")
     @Primary
@@ -42,8 +43,8 @@ public class DataSource1Config {
             throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-//      bean.setMapperLocations(
-//              new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test1/*.xml"));
+      bean.setMapperLocations(
+              new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/ds1/*.xml"));
         return bean.getObject();
     }
 
