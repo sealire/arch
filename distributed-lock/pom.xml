@@ -42,7 +42,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.leesia.Application</mainClass>
+                            <mainClass>org.leesia.lock.Application</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -36,7 +36,7 @@
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="org.leesia" level="info">
+    <logger name="org.leesia.lock" level="info">
         <appender-ref ref="lock_log"/>
     </logger>
 </configuration>
