@@ -2,7 +2,7 @@ debug: false
 
 spring:
   profiles:
-    active: home
+    active: work
 
 mybatis:
     mapper-locations: classpath*:mybatis/*/*.xml

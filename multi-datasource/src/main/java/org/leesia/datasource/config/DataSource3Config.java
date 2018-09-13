@@ -16,53 +16,46 @@ import javax.sql.DataSource;
 
 /**
  * @Auther: leesia
- * @Date: 2018/9/10 17:39
+ * @Date: 2018/9/13 08:37
  * @Description:
  */
 @Configuration
-@MapperScan(basePackages = "org.leesia.datasource.dao.ds2", sqlSessionFactoryRef = "ds2SqlSessionFactory")
-public class DataSource2Config {
-
-//    @Bean(name = "ds2dataSourceProperties")
-//    @Qualifier("ds2dataSourceProperties")
-//    @ConfigurationProperties(prefix = "spring.datasource.ds2")
-//    public DataSourceProperties ds2dataSourceProperties() {
-//        return new DataSourceProperties();
-//    }
+@MapperScan(basePackages = "org.leesia.datasource.dao.ds3", sqlSessionFactoryRef = "ds3SqlSessionFactory")
+public class DataSource3Config {
 
     /**
-     * 配置ds2数据库
+     * 配置ds3数据库
      */
-    @Bean(name = "ds2DataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.ds2")
-    public DataSource ds2DataSource() {
+    @Bean(name = "ds3DataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.ds3")
+    public DataSource ds3DataSource() {
         return DataSourceBuilder.create().build();
 //        return dataSourceProperties.initializeDataSourceBuilder().build();
     }
 
     /**
-     * ds2 sql会话工厂
+     * ds3 sql会话工厂
      */
-    @Bean(name = "ds2SqlSessionFactory")
-    public SqlSessionFactory ds2SqlSessionFactory(@Qualifier("ds2DataSource") DataSource dataSource)
+    @Bean(name = "ds3SqlSessionFactory")
+    public SqlSessionFactory ds3SqlSessionFactory(@Qualifier("ds3DataSource") DataSource dataSource)
             throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-      bean.setMapperLocations(
-              new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/ds2/*.xml"));
+        bean.setMapperLocations(
+                new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/ds3/*.xml"));
         return bean.getObject();
     }
 
     /**
-     * ds2 事物管理
+     * ds3 事物管理
      */
-    @Bean(name = "ds2TransactionManager")
-    public DataSourceTransactionManager ds2TransactionManager(@Qualifier("ds2DataSource") DataSource dataSource) {
+    @Bean(name = "ds3TransactionManager")
+    public DataSourceTransactionManager ds3TransactionManager(@Qualifier("ds3DataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "ds2SqlSessionTemplate")
-    public SqlSessionTemplate ds2SqlSessionTemplate(@Qualifier("ds2SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    @Bean(name = "ds3SqlSessionTemplate")
+    public SqlSessionTemplate ds3SqlSessionTemplate(@Qualifier("ds3SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }

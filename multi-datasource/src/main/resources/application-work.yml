@@ -13,6 +13,11 @@ spring:
       username: root
       password: mysql
       driverClassName: com.mysql.cj.jdbc.Driver
+    ds3:
+      jdbc-url: jdbc:mysql://192.168.56.11:3306/people?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=Hongkong
+      username: root
+      password: mysql
+      driverClassName: com.mysql.cj.jdbc.Driver
 
 mybatis:
   mapper-locations: classpath*:mybatis/*/*.xml
