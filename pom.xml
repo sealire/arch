@@ -7,11 +7,6 @@
     <groupId>org.leesia</groupId>
     <artifactId>arch</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>distributed-lock</module>
-        <module>dynamic-proxy</module>
-        <module>multi-datasource</module>
-    </modules>
     <packaging>pom</packaging>
 
     <parent>
@@ -19,6 +14,13 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.1.RELEASE</version>
     </parent>
+
+    <modules>
+        <module>distributed-lock</module>
+        <module>dynamic-proxy</module>
+        <module>multi-datasource</module>
+        <module>kafka</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

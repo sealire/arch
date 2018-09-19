@@ -1,6 +1,5 @@
 package org.leesia.datasource.controller;
 
-import org.leesia.datasource.entity.City;
 import org.leesia.datasource.service.CityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
