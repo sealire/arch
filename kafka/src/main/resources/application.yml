@@ -2,4 +2,4 @@ debug: false
 
 spring:
   profiles:
-    active: work
+    active: home
