@@ -4,7 +4,7 @@ spring:
     name: kafka
   kafka:
     # kafka服务器地址(可以多个)
-    bootstrap-servers: 192.168.0.24:9092,192.168.0.48:9092,192.168.0.60:9092
+    bootstrap-servers: 192.168.0.21:9092,192.168.0.22:9092,192.168.0.23:9092
     consumer:
       # 指定一个默认的组名
       group-id: kafka2
@@ -24,7 +24,7 @@ spring:
       # 缓存容量
       buffer-memory: 524288
       # 服务器地址
-      bootstrap-servers: 192.168.0.24:9092,192.168.0.48:9092,192.168.0.60:9092
+      bootstrap-servers: 192.168.0.21:9092,192.168.0.22:9092,192.168.0.23:9092
 app:
   topic:
     common: common

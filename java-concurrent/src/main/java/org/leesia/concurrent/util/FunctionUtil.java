@@ -12,16 +12,33 @@ public class FunctionUtil {
 
     public static Function newSleepFunction(long sleep) {
         return x -> {
-            LOGGER.info("Thread: {} started", Thread.currentThread().getName());
+            LOGGER.info("Function: {} started", Thread.currentThread().getName());
 
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.info("Thread: {} interrupted on sleep Function", Thread.currentThread().getName());
             }
 
-            LOGGER.info("Thread: {} end", Thread.currentThread().getName());
+            LOGGER.info("Function: {} end", Thread.currentThread().getName());
             return x;
         };
+    }
+
+    public static Function newBlankFunction() {
+        return x -> {
+            LOGGER.info("Function: {} started", Thread.currentThread().getName());
+            LOGGER.info("Function: {} function blank", Thread.currentThread().getName());
+            LOGGER.info("Function: {} end", Thread.currentThread().getName());
+            return x;
+        };
+    }
+
+    public static void apply(Function function) {
+        if (function == null) {
+            FunctionUtil.newBlankFunction().apply(null);
+        } else {
+            function.apply(null);
+        }
     }
 }

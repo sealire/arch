@@ -10,10 +10,20 @@ public class RunnableFactory {
     private static Logger LOGGER = LoggerFactory.getLogger(RunnableFactory.class);
 
     public static Runnable newRunnable(Function function) {
-        return () -> function.apply(null);
+        return () -> {
+            LOGGER.info("Thread: {} started", Thread.currentThread().getName());
+
+            function.apply(null);
+
+            LOGGER.info("Thread: {} end", Thread.currentThread().getName());
+        };
     }
 
     public static Runnable newBlankRunnable() {
-        return () -> LOGGER.info("Thread: {} run blank", Thread.currentThread().getName());
+        return () -> {
+            LOGGER.info("Thread: {} started", Thread.currentThread().getName());
+            LOGGER.info("Thread: {} run blank", Thread.currentThread().getName());
+            LOGGER.info("Thread: {} end", Thread.currentThread().getName());
+        };
     }
 }
