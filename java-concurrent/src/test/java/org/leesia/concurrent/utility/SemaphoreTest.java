@@ -1,15 +1,13 @@
-package org.leesia.concurrent.semaphore;
+package org.leesia.concurrent.utility;
 
-import org.leesia.concurrent.thread.RunnableFactory;
 import org.leesia.concurrent.util.FunctionUtil;
 import org.leesia.concurrent.util.RandomUtil;
-import org.leesia.concurrent.utility.semaphore.SemaphoreService;
+import org.leesia.concurrent.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 public class SemaphoreTest {
 
@@ -27,7 +25,7 @@ public class SemaphoreTest {
      * 5个线程竞争1个信号量
      */
     public static void test1_1() {
-        run(5, x ->  {
+        ThreadUtil.run(5, x ->  {
             try {
                 semaphoreService.syn1_1(FunctionUtil.newSleepFunction(2000));
             } catch (InterruptedException e) {
@@ -41,7 +39,7 @@ public class SemaphoreTest {
      * 5个线程竞争1个公平信号量
      */
     public static void test_fair1_1() {
-        run(5, x ->  {
+        ThreadUtil.run(5, x ->  {
             try {
                 semaphoreService.syn_fair1_1(FunctionUtil.newSleepFunction(2000));
             } catch (InterruptedException e) {
@@ -55,7 +53,7 @@ public class SemaphoreTest {
      * 5个线程竞争2个信号量，每个线程竞争1个信号量
      */
     public static void test2_1() {
-        run(5, x ->  {
+        ThreadUtil.run(5, x ->  {
             try {
                 semaphoreService.syn2_1(FunctionUtil.newSleepFunction(2000));
             } catch (InterruptedException e) {
@@ -71,7 +69,7 @@ public class SemaphoreTest {
     public static void test1_1_interrupt_random(boolean interrupted) {
         if (interrupted) {
             int threadCount = 5;
-            Thread[] threads = run(threadCount, x ->  {
+            Thread[] threads = ThreadUtil.run(threadCount, x ->  {
                 semaphoreService.syn1_1_uninterruptibly(FunctionUtil.newSleepFunction(2000));
                 return x;
             });
@@ -80,7 +78,7 @@ public class SemaphoreTest {
             interruptRandom(threads, count);
         } else {
             int threadCount = 5;
-            Thread[] threads = run(threadCount, x ->  {
+            Thread[] threads = ThreadUtil.run(threadCount, x ->  {
                 try {
                     semaphoreService.syn1_1(FunctionUtil.newSleepFunction(2000));
                 } catch (InterruptedException e) {
@@ -98,7 +96,7 @@ public class SemaphoreTest {
      * 10个线程竞争10个信号量，每个线程竞争3个信号量
      */
     public static void test10_3() {
-        run(10, x ->  {
+        ThreadUtil.run(10, x ->  {
             try {
                 semaphoreService.syn10_3(FunctionUtil.newSleepFunction(2000));
             } catch (InterruptedException e) {
@@ -112,7 +110,7 @@ public class SemaphoreTest {
      * 5个线程竞争2个信号量，每个线程尝试竞争1个信号量
      */
     public static void test_try2_1() {
-        run(5, x ->  {
+        ThreadUtil.run(5, x ->  {
             semaphoreService.try_syn2_1(FunctionUtil.newSleepFunction(2000));
             return x;
         });
@@ -122,7 +120,7 @@ public class SemaphoreTest {
      * 10个线程竞争10个信号量，每个线程尝试竞争3个信号量
      */
     public static void test_try10_3() {
-        run(5, x ->  {
+        ThreadUtil.run(5, x ->  {
             semaphoreService.try_syn10_3(FunctionUtil.newSleepFunction(2000));
             return x;
         });
@@ -132,7 +130,7 @@ public class SemaphoreTest {
      * 5个线程竞争2个信号量，每个线程尝试竞争1个信号量，最大等待3秒
      */
     public static void test_timeout_try2_1() {
-        run(5, x ->  {
+        ThreadUtil.run(5, x ->  {
             try {
                 semaphoreService.try_timeout_syn2_1(FunctionUtil.newSleepFunction(2000), 3, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
@@ -142,19 +140,12 @@ public class SemaphoreTest {
         });
     }
 
-    private static Thread[] run(int threadCount, Function function) {
-        Thread[] threads = new Thread[threadCount];
-        for (int i = 0; i < threadCount; i++) {
-            threads[i] = new Thread(RunnableFactory.newRunnable(function), "thread-name-" + (i + 1));
-        }
-
-        for (Thread thread : threads) {
-            thread.start();
-        }
-
-        return threads;
-    }
-
+    /**
+     * 随机中断一些线程
+     *
+     * @param threads
+     * @param count
+     */
     private static void interruptRandom(Thread[] threads, int count) {
         Set<Integer> indexes = RandomUtil.randomSet(0, threads.length - 1, count);
         for (Integer index : indexes) {

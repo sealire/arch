@@ -1,4 +1,4 @@
-package org.leesia.concurrent.utility.semaphore;
+package org.leesia.concurrent.utility;
 
 import org.leesia.concurrent.util.FunctionUtil;
 import org.slf4j.Logger;

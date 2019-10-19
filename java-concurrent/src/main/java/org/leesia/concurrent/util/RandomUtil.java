@@ -22,6 +22,24 @@ public class RandomUtil {
     }
 
     /**
+     * 返回[min, max)之间的随机数， 若containMax = true，范围则是[min, max]
+     *
+     * @param min
+     * @param max
+     * @param containMax
+     * @return
+     */
+    public static long randomLong(long min, long max, boolean containMax) {
+        if (max < min) {
+            throw new RuntimeException("max must big than min");
+        }
+
+        long range = containMax ? max - min + 1 : max - min;
+        // Math.random() 生成[0, 1)之间的小数
+        return min + (long) (Math.random() * range);
+    }
+
+    /**
      * 返回[min, max]之间的count个随机数
      *
      * @param min
