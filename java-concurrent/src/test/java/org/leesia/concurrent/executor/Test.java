@@ -13,6 +13,13 @@ public class Test  {
     }
 
     public static void main(String[] args) throws Exception {
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
+        Executors.newSingleThreadScheduledExecutor();
+        ScheduledThreadPoolExecutor executor;
+        CountDownLatch latch;
+    }
+
+    public static void four() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(3);
         try {
             Runnable runnable = new Runnable() {
@@ -151,7 +158,7 @@ public class Test  {
 
         System.out.println("pool size: " + executor.getCorePoolSize());
 
-        executor.shutdown();
+        executor.shutdownNow();
 
         System.out.println("isShutdown " + executor.isShutdown());
 

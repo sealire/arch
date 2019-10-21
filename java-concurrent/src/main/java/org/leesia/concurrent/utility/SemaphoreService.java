@@ -32,7 +32,7 @@ public class SemaphoreService {
 
         FunctionUtil.apply(function);
 
-        LOGGER.info("Thread: {} release acquire 1", Thread.currentThread().getName());
+        LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
         release(semaphore_1, 1);
     }
 
@@ -48,7 +48,7 @@ public class SemaphoreService {
 
         FunctionUtil.apply(function);
 
-        LOGGER.info("Thread: {} release acquire 1", Thread.currentThread().getName());
+        LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
         release(semaphore_1_fair, 1);
     }
 
@@ -63,7 +63,7 @@ public class SemaphoreService {
 
         FunctionUtil.apply(function);
 
-        LOGGER.info("Thread: {} release acquire 1", Thread.currentThread().getName());
+        LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
         release(semaphore_1, 1);
     }
 
@@ -79,7 +79,7 @@ public class SemaphoreService {
 
         FunctionUtil.apply(function);
 
-        LOGGER.info("Thread: {} release acquire 1", Thread.currentThread().getName());
+        LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
         release(semaphore_2, 1);
     }
 
@@ -94,7 +94,7 @@ public class SemaphoreService {
 
         FunctionUtil.apply(function);
 
-        LOGGER.info("Thread: {} release acquire 3", Thread.currentThread().getName());
+        LOGGER.info("Thread: {} release 3", Thread.currentThread().getName());
         release(semaphore_10, 3);
     }
 
@@ -108,7 +108,7 @@ public class SemaphoreService {
         if (tryAcquire(semaphore_2, 1)) {
             FunctionUtil.apply(function);
 
-            LOGGER.info("Thread: {} release acquire 1", Thread.currentThread().getName());
+            LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
             release(semaphore_2, 1);
         } else {
             LOGGER.info("Thread: {} unable to tryAcquire 1", Thread.currentThread().getName());
@@ -125,7 +125,7 @@ public class SemaphoreService {
         if (tryAcquire(semaphore_10, 3)) {
             FunctionUtil.apply(function);
 
-            LOGGER.info("Thread: {} release acquire 3", Thread.currentThread().getName());
+            LOGGER.info("Thread: {} release 3", Thread.currentThread().getName());
             release(semaphore_10, 3);
         } else {
             LOGGER.info("Thread: {} unable to tryAcquire 3", Thread.currentThread().getName());
@@ -145,11 +145,23 @@ public class SemaphoreService {
         if (tryAcquire(semaphore_2, 1, timeout, unit)) {
             FunctionUtil.apply(function);
 
-            LOGGER.info("Thread: {} release acquire 1", Thread.currentThread().getName());
+            LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
             release(semaphore_2, 1);
         } else {
             LOGGER.info("Thread: {} unable to tryAcquire 1", Thread.currentThread().getName());
         }
+    }
+
+    /**
+     * 动态增加信号量
+     */
+    public void test_release() {
+        LOGGER.info("Thread: {} available permits: {}", Thread.currentThread().getName(), semaphore_1.availablePermits());
+
+        LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+        release(semaphore_1, 1);
+
+        LOGGER.info("Thread: {} available permits: {}", Thread.currentThread().getName(), semaphore_1.availablePermits());
     }
 
     /**

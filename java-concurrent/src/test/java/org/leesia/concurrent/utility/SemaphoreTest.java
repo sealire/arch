@@ -16,7 +16,7 @@ public class SemaphoreTest {
     private static SemaphoreService semaphoreService = new SemaphoreService();
 
     public static void main(String[] args) {
-        test1_1();
+        test_release();
 
         LOGGER.info("main exit");
     }
@@ -136,6 +136,16 @@ public class SemaphoreTest {
             } catch (InterruptedException e) {
                 LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
             }
+            return x;
+        });
+    }
+
+    /**
+     * 动态增加信号量
+     */
+    public static void test_release() {
+        ThreadUtil.run(1, x -> {
+            semaphoreService.test_release();
             return x;
         });
     }
