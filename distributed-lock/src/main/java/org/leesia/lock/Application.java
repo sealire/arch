@@ -4,12 +4,10 @@ import org.leesia.lock.kill.SecKill;
 import org.leesia.lock.redis.RedisService;
 import org.leesia.lock.util.SpringUtil;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @Auther: leesia
@@ -17,9 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @Description:
  */
 @EnableCaching
-@ComponentScan(basePackages = {"org.leesia"})
-@SpringBootApplication
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = "org.leesia", exclude = DataSourceAutoConfiguration.class)
 public class Application {
 
     public static void main(String[] args) throws Exception {

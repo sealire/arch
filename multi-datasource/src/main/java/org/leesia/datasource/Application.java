@@ -13,8 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @MapperScan("org.leesia.datasource.dao")
 @EnableCaching
-@ComponentScan(basePackages = {"org.leesia"})
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.leesia")
 public class Application {
 
     public static void main(String[] args) throws Exception {
