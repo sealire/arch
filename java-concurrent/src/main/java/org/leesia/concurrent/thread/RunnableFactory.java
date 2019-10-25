@@ -26,4 +26,18 @@ public class RunnableFactory {
             LOGGER.info("Thread: {} end", Thread.currentThread().getName());
         };
     }
+
+    public static Runnable checkInterrupted(Runnable runnable) {
+        return () -> {
+            try {
+                if (Thread.currentThread().isInterrupted()) {
+                    throw new InterruptedException("Thread " + Thread.currentThread().getName() + " interrupted");
+                }
+
+                runnable.run();
+            } catch (Exception e) {
+                LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
+            }
+        };
+    }
 }

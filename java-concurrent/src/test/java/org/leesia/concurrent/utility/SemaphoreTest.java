@@ -13,10 +13,16 @@ public class SemaphoreTest {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SemaphoreTest.class);
 
-    private static SemaphoreService semaphoreService = new SemaphoreService();
+    private static SemaphoreService semaphoreService1 = new SemaphoreService(1, false);
 
-    public static void main(String[] args) {
-        test_release();
+    private static SemaphoreService semaphoreService1_fair = new SemaphoreService(1, true);
+
+    private static SemaphoreService semaphoreService2 = new SemaphoreService(2, false);
+
+    private static SemaphoreService semaphoreService10 = new SemaphoreService(10, false);
+
+    public static void main(String[] args) throws Exception {
+        test_available_permits();
 
         LOGGER.info("main exit");
     }
@@ -27,7 +33,13 @@ public class SemaphoreTest {
     public static void test1_1() {
         ThreadUtil.run(5, x ->  {
             try {
-                semaphoreService.syn1_1(FunctionUtil.newSleepFunction(2000));
+                LOGGER.info("Thread: {} acquire 1", Thread.currentThread().getName());
+                semaphoreService1.acquire(1);
+
+                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+                semaphoreService1.release(1);
             } catch (InterruptedException e) {
                 LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
             }
@@ -41,7 +53,13 @@ public class SemaphoreTest {
     public static void test_fair1_1() {
         ThreadUtil.run(5, x ->  {
             try {
-                semaphoreService.syn_fair1_1(FunctionUtil.newSleepFunction(2000));
+                LOGGER.info("Thread: {} acquire 1", Thread.currentThread().getName());
+                semaphoreService1_fair.acquire(1);
+
+                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+                semaphoreService1_fair.release(1);
             } catch (InterruptedException e) {
                 LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
             }
@@ -55,7 +73,13 @@ public class SemaphoreTest {
     public static void test2_1() {
         ThreadUtil.run(5, x ->  {
             try {
-                semaphoreService.syn2_1(FunctionUtil.newSleepFunction(2000));
+                LOGGER.info("Thread: {} acquire 1", Thread.currentThread().getName());
+                semaphoreService2.acquire(1);
+
+                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+                semaphoreService2.release(1);
             } catch (InterruptedException e) {
                 LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
             }
@@ -70,7 +94,13 @@ public class SemaphoreTest {
         if (interrupted) {
             int threadCount = 5;
             Thread[] threads = ThreadUtil.run(threadCount, x ->  {
-                semaphoreService.syn1_1_uninterruptibly(FunctionUtil.newSleepFunction(2000));
+                LOGGER.info("Thread: {} acquire 1 rninterruptibly", Thread.currentThread().getName());
+                semaphoreService1.acquireUninterruptibly(1);
+
+                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+                semaphoreService1.release(1);
                 return x;
             });
 
@@ -80,7 +110,13 @@ public class SemaphoreTest {
             int threadCount = 5;
             Thread[] threads = ThreadUtil.run(threadCount, x ->  {
                 try {
-                    semaphoreService.syn1_1(FunctionUtil.newSleepFunction(2000));
+                    LOGGER.info("Thread: {} acquire 1", Thread.currentThread().getName());
+                    semaphoreService1.acquire(1);
+
+                    FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                    LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+                    semaphoreService1.release(1);
                 } catch (InterruptedException e) {
                     LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
                 }
@@ -98,7 +134,13 @@ public class SemaphoreTest {
     public static void test10_3() {
         ThreadUtil.run(10, x ->  {
             try {
-                semaphoreService.syn10_3(FunctionUtil.newSleepFunction(2000));
+                LOGGER.info("Thread: {} acquire 3", Thread.currentThread().getName());
+                semaphoreService10.acquire(3);
+
+                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                LOGGER.info("Thread: {} release 3", Thread.currentThread().getName());
+                semaphoreService10.release(3);
             } catch (InterruptedException e) {
                 LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
             }
@@ -111,7 +153,15 @@ public class SemaphoreTest {
      */
     public static void test_try2_1() {
         ThreadUtil.run(5, x ->  {
-            semaphoreService.try_syn2_1(FunctionUtil.newSleepFunction(2000));
+            LOGGER.info("Thread: {} tryAcquire 1", Thread.currentThread().getName());
+            if (semaphoreService2.tryAcquire(1)) {
+                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+                semaphoreService2.release(1);
+            } else {
+                LOGGER.info("Thread: {} unable to tryAcquire 1", Thread.currentThread().getName());
+            }
             return x;
         });
     }
@@ -121,7 +171,15 @@ public class SemaphoreTest {
      */
     public static void test_try10_3() {
         ThreadUtil.run(5, x ->  {
-            semaphoreService.try_syn10_3(FunctionUtil.newSleepFunction(2000));
+            LOGGER.info("Thread: {} tryAcquire 3", Thread.currentThread().getName());
+            if (semaphoreService10.tryAcquire(3)) {
+                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                LOGGER.info("Thread: {} release 3", Thread.currentThread().getName());
+                semaphoreService10.release(3);
+            } else {
+                LOGGER.info("Thread: {} unable to tryAcquire 3", Thread.currentThread().getName());
+            }
             return x;
         });
     }
@@ -132,7 +190,15 @@ public class SemaphoreTest {
     public static void test_timeout_try2_1() {
         ThreadUtil.run(5, x ->  {
             try {
-                semaphoreService.try_timeout_syn2_1(FunctionUtil.newSleepFunction(2000), 3, TimeUnit.SECONDS);
+                LOGGER.info("Thread: {} tryAcquire 1", Thread.currentThread().getName());
+                if (semaphoreService2.tryAcquire(1, 3, TimeUnit.SECONDS)) {
+                    FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+
+                    LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+                    semaphoreService2.release(1);
+                } else {
+                    LOGGER.info("Thread: {} unable to tryAcquire 1", Thread.currentThread().getName());
+                }
             } catch (InterruptedException e) {
                 LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
             }
@@ -145,9 +211,49 @@ public class SemaphoreTest {
      */
     public static void test_release() {
         ThreadUtil.run(1, x -> {
-            semaphoreService.test_release();
+            LOGGER.info("Thread: {} available permits: {}", Thread.currentThread().getName(), semaphoreService1.availablePermits());
+
+            LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
+            semaphoreService1.release(1);
+
+            LOGGER.info("Thread: {} available permits: {}", Thread.currentThread().getName(), semaphoreService1.availablePermits());
             return x;
         });
+    }
+
+    public static void test_available_permits() throws Exception {
+        Thread[] threads = new Thread[5];
+        for (int i = 0; i < 5; i++) {
+            threads[i] = new Thread(() -> {
+                try {
+                    semaphoreService2.acquire(1);
+                    LOGGER.info("Thread: {} start", Thread.currentThread().getName());
+
+                    Thread.sleep(2000);
+
+                    LOGGER.info("Thread: {} end", Thread.currentThread().getName());
+                    semaphoreService2.release(1);
+                } catch (InterruptedException e) {
+                    LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
+                }
+            });
+        }
+
+        for (Thread thread : threads) {
+            thread.start();
+        }
+
+        Thread.sleep(1000);
+
+        LOGGER.info("availablePermits: {}", semaphoreService2.availablePermits());
+        LOGGER.info("getQueueLength: {}", semaphoreService2.getQueueLength());
+        LOGGER.info("hasQueuedThreads: {}", semaphoreService2.hasQueuedThreads());
+        LOGGER.info("drainPermits: {}", semaphoreService2.drainPermits());
+
+        for (Thread thread : threads) {
+            thread.join();
+        }
+        LOGGER.info("availablePermits: {}", semaphoreService2.availablePermits());
     }
 
     /**

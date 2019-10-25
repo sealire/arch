@@ -1,6 +1,5 @@
 package org.leesia.concurrent.utility;
 
-import org.leesia.concurrent.util.FunctionUtil;
 import org.leesia.concurrent.util.RandomUtil;
 import org.leesia.concurrent.util.ThreadUtil;
 import org.slf4j.Logger;
@@ -32,6 +31,7 @@ public class ExchangerTest {
     public static void test_exchange() {
         ThreadUtil.run(10, x ->  {
             try {
+                LOGGER.info("Thread: {} exchange {}", Thread.currentThread().getName(), Thread.currentThread().getName());
                 String result = exchangerService.exchange(Thread.currentThread().getName());
 
                 LOGGER.info("Thread: {} exchange, get {}", Thread.currentThread().getName(), result);
@@ -50,6 +50,7 @@ public class ExchangerTest {
             try {
                 Thread.sleep(RandomUtil.randomLong(0, 5000, true));
 
+                LOGGER.info("Thread: {} exchange {}", Thread.currentThread().getName(), Thread.currentThread().getName());
                 String result = exchangerService.exchange(Thread.currentThread().getName(), RandomUtil.randomLong(0, 5000, true), TimeUnit.MILLISECONDS);
 
                 LOGGER.info("Thread: {} exchange, get {}", Thread.currentThread().getName(), result);

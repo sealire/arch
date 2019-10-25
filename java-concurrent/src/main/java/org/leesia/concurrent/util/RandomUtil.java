@@ -84,4 +84,14 @@ public class RandomUtil {
 
         return target;
     }
+
+    /**
+     * 返回随机概率
+     *
+     * @param prop 比例，[0, 1]
+     * @return
+     */
+    public static boolean randomProb(double prop) {
+        return Math.random() < prop;
+    }
 }

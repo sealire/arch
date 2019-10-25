@@ -15,6 +15,24 @@ public class FunctionUtil {
             LOGGER.info("Function: {} started", Thread.currentThread().getName());
 
             try {
+                LOGGER.info("Thread: {} sleep {}ms", Thread.currentThread().getName(), sleep);
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                LOGGER.info("Thread: {} interrupted on sleep Function", Thread.currentThread().getName());
+            }
+
+            LOGGER.info("Function: {} end", Thread.currentThread().getName());
+            return x;
+        };
+    }
+
+    public static Function newSleepRandomFunction(int min, int max) {
+        return x -> {
+            LOGGER.info("Function: {} started", Thread.currentThread().getName());
+
+            try {
+                int sleep = RandomUtil.randomInt(min, max, true);
+                LOGGER.info("Thread: {} sleep {}ms", Thread.currentThread().getName(), sleep);
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 LOGGER.info("Thread: {} interrupted on sleep Function", Thread.currentThread().getName());

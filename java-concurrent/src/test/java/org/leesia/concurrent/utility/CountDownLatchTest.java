@@ -16,7 +16,7 @@ public class CountDownLatchTest {
     private static CountDownLatchService countDownLatchService1 = new CountDownLatchService(1);
 
     public static void main(String[] args) throws Exception {
-        test_try_wait5_1();
+        test_wait_timeout5_1();
 
         LOGGER.info("main exit");
     }
@@ -150,11 +150,11 @@ public class CountDownLatchTest {
     }
 
     /**
-     * 1个线程等待另外5个线程，超时时继续运行
+     * 1个线程等待另外5个线程，最大等待时间为1秒，超时时继续运行
      *
      * @throws InterruptedException
      */
-    public static void test_try_wait5_1() throws InterruptedException {
+    public static void test_wait_timeout5_1() throws InterruptedException {
         ThreadUtil.run(5, x -> {
 
             try {

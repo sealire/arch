@@ -9,7 +9,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${fileLayoutPattern}</pattern>
+            <pattern>${consoleLayoutPattern}</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>

@@ -1,8 +1,5 @@
 package org.leesia.concurrent.utility;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -14,8 +11,6 @@ import java.util.concurrent.TimeoutException;
  */
 public class ExchangerService<T> {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(ExchangerService.class);
-
     private Exchanger<T> exchanger = new Exchanger<>();
 
     /**
@@ -26,8 +21,6 @@ public class ExchangerService<T> {
      * @throws InterruptedException
      */
     public T exchange(T t) throws InterruptedException {
-        LOGGER.info("Thread: {} exchange {}", Thread.currentThread().getName(), t);
-
         return exchanger.exchange(t);
     }
 
@@ -42,8 +35,6 @@ public class ExchangerService<T> {
      * @throws InterruptedException
      */
     public T exchange(T t, long timeout, TimeUnit unit) throws TimeoutException, InterruptedException {
-        LOGGER.info("Thread: {} exchange {}", Thread.currentThread().getName(), t);
-
         return exchanger.exchange(t, timeout, unit);
     }
 }

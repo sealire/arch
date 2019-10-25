@@ -1,5 +1,7 @@
 package org.leesia.concurrent.executor;
 
+import org.leesia.concurrent.util.RandomUtil;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -13,10 +15,24 @@ public class Test  {
     }
 
     public static void main(String[] args) throws Exception {
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
-        Executors.newSingleThreadScheduledExecutor();
-        ScheduledThreadPoolExecutor executor;
-        CountDownLatch latch;
+        for (int i = 0; i < 100; i++) {
+            System.out.println(RandomUtil.randomInt(0, 1, true));
+        }
+    }
+
+    public static String findSLD(String url) {
+        int start = url.indexOf("://");
+        if (start < 0) {
+            return null;
+        }
+        start += 3;
+
+        int end = url.indexOf(".udplat.com");
+        if (start > end) {
+            return null;
+        }
+
+        return url.substring(start, end);
     }
 
     public static void four() throws Exception {
