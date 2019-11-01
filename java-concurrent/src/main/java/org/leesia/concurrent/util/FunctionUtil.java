@@ -11,8 +11,8 @@ public class FunctionUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(RunnableFactory.class);
 
     public static Function newSleepFunction(long sleep) {
-        return x -> {
-            LOGGER.info("Function: {} started", Thread.currentThread().getName());
+        return taskId -> {
+            LOGGER.info("Function: {}, taskId: {}", Thread.currentThread().getName(), taskId);
 
             try {
                 LOGGER.info("Thread: {} sleep {}ms", Thread.currentThread().getName(), sleep);
@@ -21,14 +21,13 @@ public class FunctionUtil {
                 LOGGER.info("Thread: {} interrupted on sleep Function", Thread.currentThread().getName());
             }
 
-            LOGGER.info("Function: {} end", Thread.currentThread().getName());
-            return x;
+            return taskId;
         };
     }
 
     public static Function newSleepRandomFunction(int min, int max) {
-        return x -> {
-            LOGGER.info("Function: {} started", Thread.currentThread().getName());
+        return taskId -> {
+            LOGGER.info("Function: {}, taskId: {}", Thread.currentThread().getName(), taskId);
 
             try {
                 int sleep = RandomUtil.randomInt(min, max, true);
@@ -38,17 +37,14 @@ public class FunctionUtil {
                 LOGGER.info("Thread: {} interrupted on sleep Function", Thread.currentThread().getName());
             }
 
-            LOGGER.info("Function: {} end", Thread.currentThread().getName());
-            return x;
+            return taskId;
         };
     }
 
     public static Function newBlankFunction() {
-        return x -> {
-            LOGGER.info("Function: {} started", Thread.currentThread().getName());
-            LOGGER.info("Function: {} function blank", Thread.currentThread().getName());
-            LOGGER.info("Function: {} end", Thread.currentThread().getName());
-            return x;
+        return taskId -> {
+            LOGGER.info("Function: {}, taskId: {}", Thread.currentThread().getName(), taskId);
+            return taskId;
         };
     }
 
