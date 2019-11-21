@@ -1,8 +1,9 @@
-package org.leesia.concurrent.utility;
+package org.leesia.test.concurrent.utility;
 
-import org.leesia.concurrent.util.FunctionUtil;
+import org.leesia.concurrent.taskfactory.FunctionFactory;
 import org.leesia.concurrent.util.RandomUtil;
-import org.leesia.concurrent.util.ThreadUtil;
+import org.leesia.concurrent.utility.SemaphoreService;
+import org.leesia.test.concurrent.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,12 +32,12 @@ public class SemaphoreTest {
      * 5个线程竞争1个信号量
      */
     public static void test1_1() {
-        ThreadUtil.run(5, x ->  {
+        ThreadUtil.run(5, x -> {
             try {
                 LOGGER.info("Thread: {} acquire 1", Thread.currentThread().getName());
                 semaphoreService1.acquire(1);
 
-                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                 LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
                 semaphoreService1.release(1);
@@ -51,12 +52,12 @@ public class SemaphoreTest {
      * 5个线程竞争1个公平信号量
      */
     public static void test_fair1_1() {
-        ThreadUtil.run(5, x ->  {
+        ThreadUtil.run(5, x -> {
             try {
                 LOGGER.info("Thread: {} acquire 1", Thread.currentThread().getName());
                 semaphoreService1_fair.acquire(1);
 
-                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                 LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
                 semaphoreService1_fair.release(1);
@@ -71,12 +72,12 @@ public class SemaphoreTest {
      * 5个线程竞争2个信号量，每个线程竞争1个信号量
      */
     public static void test2_1() {
-        ThreadUtil.run(5, x ->  {
+        ThreadUtil.run(5, x -> {
             try {
                 LOGGER.info("Thread: {} acquire 1", Thread.currentThread().getName());
                 semaphoreService2.acquire(1);
 
-                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                 LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
                 semaphoreService2.release(1);
@@ -93,11 +94,11 @@ public class SemaphoreTest {
     public static void test1_1_interrupt_random(boolean interrupted) {
         if (interrupted) {
             int threadCount = 5;
-            Thread[] threads = ThreadUtil.run(threadCount, x ->  {
+            Thread[] threads = ThreadUtil.run(threadCount, x -> {
                 LOGGER.info("Thread: {} acquire 1 rninterruptibly", Thread.currentThread().getName());
                 semaphoreService1.acquireUninterruptibly(1);
 
-                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                 LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
                 semaphoreService1.release(1);
@@ -108,12 +109,12 @@ public class SemaphoreTest {
             interruptRandom(threads, count);
         } else {
             int threadCount = 5;
-            Thread[] threads = ThreadUtil.run(threadCount, x ->  {
+            Thread[] threads = ThreadUtil.run(threadCount, x -> {
                 try {
                     LOGGER.info("Thread: {} acquire 1", Thread.currentThread().getName());
                     semaphoreService1.acquire(1);
 
-                    FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                    FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                     LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
                     semaphoreService1.release(1);
@@ -132,12 +133,12 @@ public class SemaphoreTest {
      * 10个线程竞争10个信号量，每个线程竞争3个信号量
      */
     public static void test10_3() {
-        ThreadUtil.run(10, x ->  {
+        ThreadUtil.run(10, x -> {
             try {
                 LOGGER.info("Thread: {} acquire 3", Thread.currentThread().getName());
                 semaphoreService10.acquire(3);
 
-                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                 LOGGER.info("Thread: {} release 3", Thread.currentThread().getName());
                 semaphoreService10.release(3);
@@ -152,10 +153,10 @@ public class SemaphoreTest {
      * 5个线程竞争2个信号量，每个线程尝试竞争1个信号量
      */
     public static void test_try2_1() {
-        ThreadUtil.run(5, x ->  {
+        ThreadUtil.run(5, x -> {
             LOGGER.info("Thread: {} tryAcquire 1", Thread.currentThread().getName());
             if (semaphoreService2.tryAcquire(1)) {
-                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                 LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
                 semaphoreService2.release(1);
@@ -170,10 +171,10 @@ public class SemaphoreTest {
      * 10个线程竞争10个信号量，每个线程尝试竞争3个信号量
      */
     public static void test_try10_3() {
-        ThreadUtil.run(5, x ->  {
+        ThreadUtil.run(5, x -> {
             LOGGER.info("Thread: {} tryAcquire 3", Thread.currentThread().getName());
             if (semaphoreService10.tryAcquire(3)) {
-                FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                 LOGGER.info("Thread: {} release 3", Thread.currentThread().getName());
                 semaphoreService10.release(3);
@@ -188,11 +189,11 @@ public class SemaphoreTest {
      * 5个线程竞争2个信号量，每个线程尝试竞争1个信号量，最大等待3秒
      */
     public static void test_timeout_try2_1() {
-        ThreadUtil.run(5, x ->  {
+        ThreadUtil.run(5, x -> {
             try {
                 LOGGER.info("Thread: {} tryAcquire 1", Thread.currentThread().getName());
                 if (semaphoreService2.tryAcquire(1, 3, TimeUnit.SECONDS)) {
-                    FunctionUtil.apply(FunctionUtil.newSleepFunction(2000));
+                    FunctionFactory.apply(FunctionFactory.newSleepFunction(2000));
 
                     LOGGER.info("Thread: {} release 1", Thread.currentThread().getName());
                     semaphoreService2.release(1);

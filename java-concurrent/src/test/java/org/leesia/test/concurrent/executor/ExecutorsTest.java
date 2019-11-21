@@ -1,8 +1,9 @@
-package org.leesia.concurrent.executor;
+package org.leesia.test.concurrent.executor;
 
-import org.leesia.concurrent.util.FunctionUtil;
+import org.leesia.concurrent.executor.ExecutorsService;
+import org.leesia.concurrent.taskfactory.FunctionFactory;
 import org.leesia.concurrent.util.RandomUtil;
-import org.leesia.concurrent.util.ThreadUtil;
+import org.leesia.test.concurrent.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class ExecutorsTest {
     public static void test_cached_pool10() throws InterruptedException {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) ExecutorsService.newCachedThreadPool();
 
-        ThreadUtil.executeOnPool(executor, 10, FunctionUtil.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
+        ThreadUtil.executeOnPool(executor, 10, FunctionFactory.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
 
         LOGGER.info("Thread: {}", executor.getPoolSize());
 
@@ -49,7 +50,7 @@ public class ExecutorsTest {
     public static void test_cached_pool10_1() throws InterruptedException {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) ExecutorsService.newCachedThreadPool();
 
-        ThreadUtil.executeOnPool(executor, 10, FunctionUtil.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
+        ThreadUtil.executeOnPool(executor, 10, FunctionFactory.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
 
         LOGGER.info("Thread: {}", executor.getPoolSize());
 
@@ -75,7 +76,7 @@ public class ExecutorsTest {
     public static void test_cached_pool10_2() throws InterruptedException {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) ExecutorsService.newCachedThreadPool(r -> new Thread(r, ThreadUtil.getThreadName()));
 
-        ThreadUtil.executeOnPool(executor, 10, FunctionUtil.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
+        ThreadUtil.executeOnPool(executor, 10, FunctionFactory.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
 
         Thread.sleep(10000);
 
@@ -97,7 +98,7 @@ public class ExecutorsTest {
     public static void test_fixed_pool10() throws InterruptedException {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) ExecutorsService.newFixedThreadPool(10);
 
-        ThreadUtil.executeOnPool(executor, 10, FunctionUtil.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
+        ThreadUtil.executeOnPool(executor, 10, FunctionFactory.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
 
         LOGGER.info("Thread: {}", executor.getPoolSize());
 
@@ -121,7 +122,7 @@ public class ExecutorsTest {
     public static void test_fixed_pool10_1() throws InterruptedException {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) ExecutorsService.newFixedThreadPool(10, r -> new Thread(r, ThreadUtil.getThreadName()));
 
-        ThreadUtil.executeOnPool(executor, 10, FunctionUtil.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
+        ThreadUtil.executeOnPool(executor, 10, FunctionFactory.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
 
         Thread.sleep(10000);
 
@@ -141,7 +142,7 @@ public class ExecutorsTest {
     public static void test_single_pool() {
         ExecutorService executor = ExecutorsService.newSingleThreadExecutor();
 
-        ThreadUtil.executeOnPool(executor, 10, FunctionUtil.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
+        ThreadUtil.executeOnPool(executor, 10, FunctionFactory.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
 
         executor.shutdown();
     }
@@ -152,7 +153,7 @@ public class ExecutorsTest {
     public static void test_single_pool_1() {
         ExecutorService executor = ExecutorsService.newSingleThreadExecutor(r -> new Thread(r, ThreadUtil.getThreadName()));
 
-        ThreadUtil.executeOnPool(executor, 10, FunctionUtil.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
+        ThreadUtil.executeOnPool(executor, 10, FunctionFactory.newSleepFunction(RandomUtil.randomLong(0, 500, false)));
 
         executor.shutdown();
     }

@@ -1,8 +1,9 @@
-package org.leesia.concurrent.utility;
+package org.leesia.test.concurrent.utility;
 
-import org.leesia.concurrent.thread.RunnableFactory;
+import org.leesia.concurrent.taskfactory.RunnableFactory;
 import org.leesia.concurrent.util.RandomUtil;
-import org.leesia.concurrent.util.ThreadUtil;
+import org.leesia.concurrent.utility.CyclicBarrierService;
+import org.leesia.test.concurrent.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

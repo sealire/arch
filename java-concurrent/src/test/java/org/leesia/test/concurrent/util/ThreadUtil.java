@@ -1,6 +1,9 @@
-package org.leesia.concurrent.util;
+package org.leesia.test.concurrent.util;
 
-import org.leesia.concurrent.thread.RunnableFactory;
+import org.leesia.concurrent.taskfactory.RunnableFactory;
+import org.leesia.concurrent.util.RandomUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
@@ -11,6 +14,8 @@ import java.util.function.Function;
  * @Description:
  */
 public class ThreadUtil {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(ThreadUtil.class);
 
     /**
      * 启动多线程运行
@@ -61,5 +66,32 @@ public class ThreadUtil {
      */
     public static String getThreadName() {
         return "thread-test-" + RandomUtil.randomInt(1000000, 10000000, false);
+    }
+
+    /**
+     * 睡眠sleep毫秒
+     *
+     * @param sleep
+     */
+    public static void sleep(long sleep) {
+        try {
+            Thread.sleep(sleep);
+        } catch (InterruptedException e) {
+            LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
+        }
+    }
+
+    /**
+     * 随机睡眠[min, max]毫秒
+     *
+     * @param min
+     * @param max
+     */
+    public static void sleepRandom(long min, long max) {
+        try {
+            Thread.sleep(RandomUtil.randomLong(min, max, true));
+        } catch (InterruptedException e) {
+            LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
+        }
     }
 }

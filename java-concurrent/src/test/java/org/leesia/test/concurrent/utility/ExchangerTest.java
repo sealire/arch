@@ -1,7 +1,8 @@
-package org.leesia.concurrent.utility;
+package org.leesia.test.concurrent.utility;
 
 import org.leesia.concurrent.util.RandomUtil;
-import org.leesia.concurrent.util.ThreadUtil;
+import org.leesia.concurrent.utility.ExchangerService;
+import org.leesia.test.concurrent.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public class ExchangerTest {
      * 10个线程间交换数据
      */
     public static void test_exchange() {
-        ThreadUtil.run(10, x ->  {
+        ThreadUtil.run(10, x -> {
             try {
                 LOGGER.info("Thread: {} exchange {}", Thread.currentThread().getName(), Thread.currentThread().getName());
                 String result = exchangerService.exchange(Thread.currentThread().getName());
@@ -46,7 +47,7 @@ public class ExchangerTest {
      * 10个线程间交换数据
      */
     public static void test_timeout_exchange() {
-        ThreadUtil.run(10, x ->  {
+        ThreadUtil.run(10, x -> {
             try {
                 Thread.sleep(RandomUtil.randomLong(0, 5000, true));
 

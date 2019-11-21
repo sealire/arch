@@ -3,6 +3,7 @@ package org.leesia.concurrent.executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -248,6 +249,64 @@ public class ThreadPoolExecutorService {
     public boolean remove(Runnable task) {
         return executor.remove(task);
     }
+
+    /**
+     * 提交任务，并等待最先返回的结果
+     *
+     * @param tasks
+     * @param <T>
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public <T> T invokeAny(Collection<? extends Callable<T>> tasks) throws ExecutionException, InterruptedException {
+        return executor.invokeAny(tasks);
+    }
+
+    /**
+     * 提交任务，并在最大等待时间内等待最先返回的结果
+     *
+     * @param tasks
+     * @param timeout
+     * @param unit
+     * @param <T>
+     * @return
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws TimeoutException
+     */
+    public <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+        return executor.invokeAny(tasks, timeout, unit);
+    }
+
+    /**
+     * 提交任务，并等待全部结果返回
+     *
+     * @param tasks
+     * @param <T>
+     * @return
+     * @throws InterruptedException
+     */
+    public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException {
+        return executor.invokeAll(tasks);
+    }
+
+    /**
+     * 提交任务，并在最大等待时间内等待全部结果返回
+     *
+     * @param tasks
+     * @param timeout
+     * @param unit
+     * @param <T>
+     * @return
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws TimeoutException
+     */
+    public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+        return executor.invokeAll(tasks, timeout, unit);
+    }
+
 
     class MyExecutor extends ThreadPoolExecutor {
 

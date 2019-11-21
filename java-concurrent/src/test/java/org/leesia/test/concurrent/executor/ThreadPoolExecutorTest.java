@@ -1,13 +1,16 @@
-package org.leesia.concurrent.executor;
+package org.leesia.test.concurrent.executor;
 
-import org.leesia.concurrent.thread.CallableFactory;
-import org.leesia.concurrent.thread.RunnableFactory;
-import org.leesia.concurrent.util.FunctionUtil;
+import org.leesia.concurrent.executor.ThreadPoolExecutorService;
+import org.leesia.concurrent.taskfactory.CallableFactory;
+import org.leesia.concurrent.taskfactory.RunnableFactory;
+import org.leesia.concurrent.taskfactory.FunctionFactory;
 import org.leesia.concurrent.util.RandomUtil;
-import org.leesia.concurrent.util.ThreadUtil;
+import org.leesia.concurrent.vo.Result;
+import org.leesia.test.concurrent.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,9 @@ public class ThreadPoolExecutorTest {
 
     private static ThreadPoolExecutorService threadPoolExecutorService3_10 = new ThreadPoolExecutorService(
             3, 10, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>(10));
+
+    private static ThreadPoolExecutorService threadPoolExecutorService10_10 = new ThreadPoolExecutorService(
+            10, 10, 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>(10));
 
     private static ThreadPoolExecutorService threadPoolExecutorService10_20 = new ThreadPoolExecutorService(
             10, 20, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>(10));
@@ -34,7 +40,7 @@ public class ThreadPoolExecutorTest {
             3, 10, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>(10), r -> new Thread(r, ThreadUtil.getThreadName()), new ThreadPoolExecutor.AbortPolicy());
 
     public static void main(String[] args) throws Exception {
-        test_shutdown_now10_20_1();
+        test_invoke_all_timeout_10();
 
         LOGGER.info("main exit");
     }
@@ -43,7 +49,7 @@ public class ThreadPoolExecutorTest {
      * 10个任务，在[3, 10]的线程池中运行，只起了3个核心线程，剩余7个任务在任务队列
      */
     public static void test_execute10_10() {
-        execute(threadPoolExecutorService3_10, 10, FunctionUtil.newSleepRandomFunction(0, 500));
+        execute(threadPoolExecutorService3_10, 10, FunctionFactory.newSleepRandomFunction(0, 500));
 
         threadPoolExecutorService3_10.shutdown();
     }
@@ -52,7 +58,7 @@ public class ThreadPoolExecutorTest {
      * 18个任务，在[3, 10]的线程池中运行，先起3个核心线程，10个任务加入任务队列，剩下5个任务再起5个线程，一共起了8个线程
      */
     public static void test_execute10_18() {
-        execute(threadPoolExecutorService3_10, 18, FunctionUtil.newSleepRandomFunction(0, 500));
+        execute(threadPoolExecutorService3_10, 18, FunctionFactory.newSleepRandomFunction(0, 500));
 
         threadPoolExecutorService3_10.shutdown();
     }
@@ -61,7 +67,7 @@ public class ThreadPoolExecutorTest {
      * 10个任务，在[3, 10]的线程池中运行，指定线程工厂
      */
     public static void test_execute10_10_f() {
-        execute(threadPoolExecutorService3_10_f, 10, FunctionUtil.newSleepRandomFunction(0, 500));
+        execute(threadPoolExecutorService3_10_f, 10, FunctionFactory.newSleepRandomFunction(0, 500));
 
         threadPoolExecutorService3_10_f.shutdown();
     }
@@ -71,7 +77,7 @@ public class ThreadPoolExecutorTest {
      */
     public static void test_execute10_21_h() {
         try {
-            execute(threadPoolExecutorService3_10_h, 21, FunctionUtil.newSleepRandomFunction(0, 500));
+            execute(threadPoolExecutorService3_10_h, 21, FunctionFactory.newSleepRandomFunction(0, 500));
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         } finally {
@@ -84,7 +90,7 @@ public class ThreadPoolExecutorTest {
      */
     public static void test_execute10_21_f_h() {
         try {
-            execute(threadPoolExecutorService3_10_f_h, 21, FunctionUtil.newSleepRandomFunction(0, 500));
+            execute(threadPoolExecutorService3_10_f_h, 21, FunctionFactory.newSleepRandomFunction(0, 500));
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         } finally {
@@ -99,7 +105,7 @@ public class ThreadPoolExecutorTest {
      */
     public static void test_shutdown10_20() throws InterruptedException {
         try {
-            execute(threadPoolExecutorService3_10, 20, FunctionUtil.newSleepRandomFunction(0, 5000));
+            execute(threadPoolExecutorService3_10, 20, FunctionFactory.newSleepRandomFunction(0, 5000));
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         }
@@ -115,7 +121,7 @@ public class ThreadPoolExecutorTest {
 
 
         try {
-            execute(threadPoolExecutorService3_10, 3, FunctionUtil.newSleepRandomFunction(0, 5000));
+            execute(threadPoolExecutorService3_10, 3, FunctionFactory.newSleepRandomFunction(0, 5000));
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         }
@@ -129,7 +135,7 @@ public class ThreadPoolExecutorTest {
      */
     public static void test_shutdown_now10_20() {
         try {
-            execute(threadPoolExecutorService10_20, 20, FunctionUtil.newBlankFunction());
+            execute(threadPoolExecutorService10_20, 20, FunctionFactory.newBlankFunction());
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         }
@@ -146,7 +152,7 @@ public class ThreadPoolExecutorTest {
      */
     public static void test_shutdown_now10_20_1() {
         try {
-            executeCheckInterrupted(threadPoolExecutorService10_20, 20, FunctionUtil.newBlankFunction());
+            executeCheckInterrupted(threadPoolExecutorService10_20, 20, FunctionFactory.newBlankFunction());
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         }
@@ -164,7 +170,7 @@ public class ThreadPoolExecutorTest {
      * @throws InterruptedException
      */
     public static void test_allow_core_timeout() throws InterruptedException {
-        execute(threadPoolExecutorService3_10, 10, FunctionUtil.newBlankFunction());
+        execute(threadPoolExecutorService3_10, 10, FunctionFactory.newBlankFunction());
 
         LOGGER.info("core size: {}, pool size: {}", threadPoolExecutorService3_10.getCorePoolSize(), threadPoolExecutorService3_10.getPoolSize());
 
@@ -200,7 +206,7 @@ public class ThreadPoolExecutorTest {
      */
     public static void test_completed_task() throws InterruptedException {
         try {
-            execute(threadPoolExecutorService3_10, 20, FunctionUtil.newSleepRandomFunction(0, 1000));
+            execute(threadPoolExecutorService3_10, 20, FunctionFactory.newSleepRandomFunction(0, 1000));
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         }
@@ -211,7 +217,7 @@ public class ThreadPoolExecutorTest {
 
 
         try {
-            execute(threadPoolExecutorService3_10, 20, FunctionUtil.newSleepRandomFunction(0, 1000));
+            execute(threadPoolExecutorService3_10, 20, FunctionFactory.newSleepRandomFunction(0, 1000));
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         }
@@ -231,7 +237,7 @@ public class ThreadPoolExecutorTest {
      */
     public static void test_task_count() throws InterruptedException {
         try {
-            execute(threadPoolExecutorService3_10, 20, FunctionUtil.newSleepRandomFunction(0, 1000));
+            execute(threadPoolExecutorService3_10, 20, FunctionFactory.newSleepRandomFunction(0, 1000));
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         }
@@ -240,7 +246,7 @@ public class ThreadPoolExecutorTest {
         Thread.sleep(RandomUtil.randomLong(0, 3000, true));
 
         try {
-            execute(threadPoolExecutorService3_10, 20, FunctionUtil.newSleepRandomFunction(0, 1000));
+            execute(threadPoolExecutorService3_10, 20, FunctionFactory.newSleepRandomFunction(0, 1000));
         } catch (Exception e) {
             LOGGER.error("catch e: {}", e);
         }
@@ -273,7 +279,7 @@ public class ThreadPoolExecutorTest {
         Map<Integer, Future> futures = new HashMap<>();
 
         for (int i = 0; i < 10; i++) {
-            int taskId = RunnableFactory.getTaskId();
+            int taskId = RunnableFactory.getTaskId(null);
             futures.put(taskId, threadPoolExecutorService3_10.submit(RunnableFactory.newBlankRunnable(taskId)));
         }
 
@@ -288,8 +294,36 @@ public class ThreadPoolExecutorTest {
         threadPoolExecutorService3_10.shutdown();
     }
 
+    /**
+     * 10个任务，通过Runnable提交后，通过Result返回结果
+     */
     public static void test_submit_runnable_with_result() {
         Map<Integer, Future> futures = new HashMap<>();
+        Map<Integer, Result> results = new HashMap<>();
+        for (int i = 0; i < 10; i++) {
+            int taskId = RunnableFactory.getTaskId(null);
+            Result result = new Result();
+            futures.put(taskId, threadPoolExecutorService3_10.submit(RunnableFactory.newCustomRunnable(taskId, o -> {
+                Result r = (Result) o;
+                r.setNum(taskId);
+                r.setResult("" + RandomUtil.randomInt(0, 100, true));
+                return r;
+            }, result), result));
+            results.put(taskId, result);
+        }
+
+        for (Map.Entry<Integer, Future> entry : futures.entrySet()) {
+            try {
+                LOGGER.info("task: {}, isDone: {} return: {}", entry.getKey(), entry.getValue().isDone(), entry.getValue().get());
+            } catch (InterruptedException | ExecutionException e) {
+                LOGGER.info("task: {}, error: {}", entry.getKey(), e);
+            }
+        }
+        for (Map.Entry<Integer, Result> entry : results.entrySet()) {
+            LOGGER.info("task: {}, return: {}", entry.getKey(), entry.getValue());
+        }
+
+        threadPoolExecutorService3_10.shutdown();
     }
 
     /**
@@ -299,7 +333,7 @@ public class ThreadPoolExecutorTest {
         Map<Integer, Future> futures = new HashMap<>();
 
         for (int i = 0; i < 10; i++) {
-            int taskId = RunnableFactory.getTaskId();
+            int taskId = RunnableFactory.getTaskId(null);
             futures.put(taskId, threadPoolExecutorService3_10.submit(CallableFactory.newBlankCallable(taskId)));
         }
 
@@ -312,6 +346,121 @@ public class ThreadPoolExecutorTest {
         }
 
         threadPoolExecutorService3_10.shutdown();
+    }
+
+    /**
+     * 10个任务，通过Callable提交后，睡眠[1, 3]秒后，取消任务
+     *
+     * @throws InterruptedException
+     */
+    public static void cancel_task_10() throws InterruptedException {
+        Map<Integer, Future> futures = new HashMap<>();
+
+        for (int i = 0; i < 10; i++) {
+            int taskId = RunnableFactory.getTaskId(null);
+            futures.put(taskId, threadPoolExecutorService3_10.submit(() -> {
+                try {
+                    int i1 = 0;
+                    while (i1 == 0) {
+                        if (Thread.currentThread().isInterrupted()) {
+                            throw new InterruptedException("Thread " + Thread.currentThread().getName() + " interrupted");
+                        }
+
+                        LOGGER.info("task: {} running", taskId);
+                    }
+                } catch (Exception e) {
+                    LOGGER.error("task: {} error: {}", taskId, e.getMessage());
+                }
+
+                return "" + taskId;
+            }));
+        }
+
+        Thread.sleep(RandomUtil.randomLong(1000, 3000, true));
+
+        for (Map.Entry<Integer, Future> entry : futures.entrySet()) {
+            entry.getValue().cancel(true);
+        }
+
+        threadPoolExecutorService3_10.shutdown();
+    }
+
+    /**
+     * 10个任务，通过Callable提交后，获取最先返回的结果
+     *
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void test_invoke_any_10() throws ExecutionException, InterruptedException {
+        List<Callable<Integer>> callables = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            callables.add(CallableFactory.newCallable(FunctionFactory.newSleepRandomFunction(1000, 10000), null));
+        }
+
+        Integer result = threadPoolExecutorService10_10.invokeAny(callables);
+        LOGGER.info("invokeAny result: {}", result);
+
+        threadPoolExecutorService10_10.shutdown();
+    }
+
+    /**
+     * 10个任务，通过Callable提交后，获取最先返回的结果并最长等待1.5秒
+     *
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws TimeoutException
+     */
+    public static void test_invoke_any_timeout_10() throws ExecutionException, InterruptedException, TimeoutException {
+        List<Callable<Integer>> callables = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            callables.add(CallableFactory.newCallable(FunctionFactory.newSleepRandomFunction(1000, 10000), null));
+        }
+
+        Integer result = threadPoolExecutorService10_10.invokeAny(callables, 1500, TimeUnit.MILLISECONDS);
+        LOGGER.info("invokeAny result: {}", result);
+
+        threadPoolExecutorService10_10.shutdown();
+    }
+
+    /**
+     * 10个任务，通过Callable提交后，获取全部返回的结果
+     *
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void test_invoke_all_10() throws ExecutionException, InterruptedException {
+        List<Callable<Integer>> callables = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            callables.add(CallableFactory.newCallable(FunctionFactory.newSleepRandomFunction(1000, 10000), null));
+        }
+
+        List<Future<Integer>> results = threadPoolExecutorService10_10.invokeAll(callables);
+        for (Future<Integer> future : results) {
+            LOGGER.info("invokeAll result: {}", future.get());
+        }
+
+        threadPoolExecutorService10_10.shutdown();
+    }
+
+    /**
+     * 10个任务，通过Callable提交后，获取全部返回的结果并最长等待5秒
+     *
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws TimeoutException
+     */
+    public static void test_invoke_all_timeout_10() throws ExecutionException, InterruptedException, TimeoutException {
+        List<Callable<Integer>> callables = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            callables.add(CallableFactory.newCallable(FunctionFactory.newSleepRandomFunction(1000, 10000), null));
+        }
+
+        List<Future<Integer>> results = threadPoolExecutorService10_10.invokeAll(callables, 5000, TimeUnit.MILLISECONDS);
+        for (Future<Integer> future : results) {
+            LOGGER.info("invokeAll result: {}", future.get());
+        }
+
+        threadPoolExecutorService10_10.shutdown();
     }
 
     private static void execute(ThreadPoolExecutorService executorService, int threadCount, Function function) {

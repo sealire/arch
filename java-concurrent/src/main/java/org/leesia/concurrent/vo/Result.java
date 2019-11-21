@@ -1,5 +1,6 @@
 package org.leesia.concurrent.vo;
 
+@Deprecated
 public class Result {
 
     private String result;
