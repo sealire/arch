@@ -36,6 +36,16 @@ public class GeneralTools {
             return ((Map) o).isEmpty();
         }
 
-        return true;
+        return false;
+    }
+
+    /**
+     * 判断对象是否为非空
+     *
+     * @param o 可能是对象，字符串，Collection, Map
+     * @return
+     */
+    public static boolean isNotEmpty(Object o) {
+        return !isEmpty(o);
     }
 }

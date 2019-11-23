@@ -2,6 +2,8 @@ package org.leesia.util.list;
 
 import org.leesia.util.common.GeneralTools;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -49,5 +51,16 @@ public class LListUtil {
             sum += num;
         }
         return sum;
+    }
+
+    /**
+     * 转List
+     *
+     * @param ts
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> asList(T... ts) {
+        return new ArrayList<>(Arrays.asList(ts));
     }
 }
