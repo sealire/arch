@@ -1,4 +1,4 @@
-package org.leesia.concurrent.constants;
+package org.leesia.util.constants;
 
 /**
  * @ClassName: CharacterSet

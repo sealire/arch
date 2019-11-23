@@ -21,6 +21,7 @@
         <module>multi-datasource</module>
         <module>kafka</module>
         <module>java-concurrent</module>
+        <module>leesia-util</module>
     </modules>
 
     <properties>

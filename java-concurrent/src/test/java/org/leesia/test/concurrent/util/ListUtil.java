@@ -1,6 +1,7 @@
 package org.leesia.test.concurrent.util;
 
-import org.leesia.concurrent.util.RandomUtil;
+
+import org.leesia.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;

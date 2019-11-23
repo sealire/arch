@@ -3,8 +3,8 @@ package org.leesia.concurrent.vo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.leesia.concurrent.util.DateUtil;
-import org.leesia.concurrent.util.RandomUtil;
+import org.leesia.util.RandomUtil;
+import org.leesia.util.date.LDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,7 +74,7 @@ public class Task<T, R> implements Serializable {
     /**
      * 计算结果
      */
-    public void compute() {
+    public R compute() {
         startTime = new Date();
 
         threadName = getThreadName();
@@ -85,8 +85,10 @@ public class Task<T, R> implements Serializable {
         endTime = new Date();
 
         logger.info("task: {}, thread: {}, run from: {} to: {}, input: {}, output: {}",
-                taskName, threadName, DateUtil.format(startTime, "YYYY-MM-dd HH:mm:ss"),
-                DateUtil.format(endTime, "YYYY-MM-dd HH:mm:ss"), param, result);
+                taskName, threadName, LDateUtil.format(startTime, "YYYY-MM-dd HH:mm:ss"),
+                LDateUtil.format(endTime, "YYYY-MM-dd HH:mm:ss"), param, result);
+
+        return result;
     }
 
     /**

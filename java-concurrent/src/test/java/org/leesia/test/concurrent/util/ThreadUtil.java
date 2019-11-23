@@ -1,7 +1,7 @@
 package org.leesia.test.concurrent.util;
 
 import org.leesia.concurrent.taskfactory.RunnableFactory;
-import org.leesia.concurrent.util.RandomUtil;
+import org.leesia.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,9 +1,9 @@
 package org.leesia.test.concurrent.utility;
 
 import org.leesia.concurrent.taskfactory.FunctionFactory;
-import org.leesia.concurrent.util.RandomUtil;
 import org.leesia.concurrent.utility.SemaphoreService;
 import org.leesia.test.concurrent.util.ThreadUtil;
+import org.leesia.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

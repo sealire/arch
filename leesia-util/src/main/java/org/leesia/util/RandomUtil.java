@@ -1,6 +1,7 @@
-package org.leesia.concurrent.util;
+package org.leesia.util;
 
-import org.leesia.concurrent.constants.CharacterSet;
+import org.leesia.util.constants.CharacterSet;
+import org.leesia.util.list.LListUtil;
 
 import java.util.*;
 
@@ -25,7 +26,10 @@ public class RandomUtil {
         }
 
         long range = containMax ? max - min + 1 : max - min;
-        // Math.random() 生成[0, 1)之间的小数
+
+        /**
+         * Math.random() 生成[0, 1)之间的小数
+         */
         return min + (int) (Math.random() * range);
     }
 
@@ -43,7 +47,10 @@ public class RandomUtil {
         }
 
         double range = containMax ? max - min + 1 : max - min;
-        // Math.random() 生成[0, 1)之间的小数
+
+        /**
+         * Math.random() 生成[0, 1)之间的小数
+         */
         return min + (long) (Math.random() * range);
     }
 
@@ -142,7 +149,7 @@ public class RandomUtil {
         List<Character> target = randomSequence(characters, length);
         Collections.shuffle(target);
 
-        return ListUtil.join("", target);
+        return LListUtil.join("", target);
     }
 
     /**
@@ -161,7 +168,7 @@ public class RandomUtil {
         List<Character> target = randomSequence(characters, length);
         Collections.shuffle(target);
 
-        return ListUtil.join("", target);
+        return LListUtil.join("", target);
     }
 
     /**
@@ -180,7 +187,7 @@ public class RandomUtil {
         List<Character> target = randomSequence(characters, length);
         Collections.shuffle(target);
 
-        return ListUtil.join("", target);
+        return LListUtil.join("", target);
     }
 
     /**
@@ -201,7 +208,7 @@ public class RandomUtil {
 
         target = normalizeNumberSequence(target);
 
-        return ListUtil.join("", target);
+        return LListUtil.join("", target);
     }
 
     /**

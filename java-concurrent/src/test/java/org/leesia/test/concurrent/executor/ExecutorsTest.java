@@ -2,8 +2,8 @@ package org.leesia.test.concurrent.executor;
 
 import org.leesia.concurrent.executor.ExecutorsService;
 import org.leesia.concurrent.taskfactory.FunctionFactory;
-import org.leesia.concurrent.util.RandomUtil;
 import org.leesia.test.concurrent.util.ThreadUtil;
+import org.leesia.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
