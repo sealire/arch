@@ -85,8 +85,8 @@ public class Task<T, R> implements Serializable {
         endTime = new Date();
 
         logger.info("task: {}, thread: {}, run from: {} to: {}, input: {}, output: {}",
-                taskName, threadName, LDateUtil.format(startTime, "YYYY-MM-dd HH:mm:ss"),
-                LDateUtil.format(endTime, "YYYY-MM-dd HH:mm:ss"), param, result);
+                taskName, threadName, LDateUtil.format(startTime, "YYYY-MM-dd HH:mm:ss:SSS"),
+                LDateUtil.format(endTime, "YYYY-MM-dd HH:mm:ss:SSS"), param, result);
 
         return result;
     }

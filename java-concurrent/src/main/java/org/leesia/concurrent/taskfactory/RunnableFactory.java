@@ -1,11 +1,18 @@
 package org.leesia.concurrent.taskfactory;
 
+import org.leesia.concurrent.vo.Task;
 import org.leesia.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Function;
 
+/**
+ * @ClassName: RunnableFactory
+ * @Description:
+ * @author: leesia
+ * @date: 2019/11/26 11:39
+ */
 public class RunnableFactory {
 
     private static Logger LOGGER = LoggerFactory.getLogger(RunnableFactory.class);
@@ -23,6 +30,7 @@ public class RunnableFactory {
         };
     }
 
+    @Deprecated
     public static Runnable newRunnable(Function function, Integer taskId) {
         return () -> {
             Integer tid = getTaskId(taskId);
@@ -44,6 +52,7 @@ public class RunnableFactory {
         };
     }
 
+    @Deprecated
     public static Runnable newBlankRunnable(Integer taskId) {
         return () -> {
             Integer tid = getTaskId(taskId);
@@ -52,6 +61,7 @@ public class RunnableFactory {
         };
     }
 
+    @Deprecated
     public static Runnable checkInterrupted(Runnable runnable) {
         return () -> {
             int taskId = getTaskId(null);
@@ -72,10 +82,12 @@ public class RunnableFactory {
         };
     }
 
+    @Deprecated
     public static <T> CustomRunnable newCustomRunnable(Integer taskId, Function function, T t) {
         return new CustomRunnable<T>(taskId, function, t);
     }
 
+    @Deprecated
     static class CustomRunnable<T> implements Runnable {
 
         private Integer taskId;
@@ -100,9 +112,14 @@ public class RunnableFactory {
         }
     }
 
+    @Deprecated
     public static Integer getTaskId(Integer taskId) {
         return taskId == null
                 ? RandomUtil.randomInt(0, 100000000, true)
                 : taskId;
+    }
+
+    public static Runnable newRunnable(Task task) {
+        return () -> task.compute();
     }
 }
