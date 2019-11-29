@@ -43,6 +43,16 @@ public class ConcurrentSkipListMapService<K, V> {
     }
 
     /**
+     * 获取数据
+     *
+     * @param key
+     * @return
+     */
+    public V get(Object key) {
+        return concurrentSkipListMap.get(key);
+    }
+
+    /**
      * 移除第一个数据
      *
      * @return

@@ -1,6 +1,7 @@
 package org.leesia.concurrent.concurrentcollections;
 
 import java.util.Collection;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -43,6 +44,26 @@ public class CopyOnWriteArrayListService<E> {
      */
     public void add(int index, E element) {
         copyOnWriteArrayList.add(index, element);
+    }
+
+    /**
+     * 获取元素
+     *
+     * @param index
+     * @return
+     */
+    public E get(int index) {
+        return copyOnWriteArrayList.get(index);
+    }
+
+    /**
+     * 移除元素
+     *
+     * @param index
+     * @return
+     */
+    public E remove(int index) {
+        return copyOnWriteArrayList.remove(index);
     }
 
     /**
