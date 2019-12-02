@@ -1,29 +1,34 @@
 package org.leesia.concurrent.concurrentcollections;
 
 import java.util.Collection;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.Comparator;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @ClassName: ArrayBlockingQueueService
+ * @ClassName: PriorityBlockingQueueService
  * @Description:
  * @author: leesia
- * @date: 2019/11/27 14:48
+ * @date: 2019/12/2 13:14
  */
-public class ArrayBlockingQueueService<E> {
+public class PriorityBlockingQueueService<E> {
 
-    private ArrayBlockingQueue<E> arrayBlockingQueue;
+    private PriorityBlockingQueue<E> priorityBlockingQueue;
 
-    public ArrayBlockingQueueService(int capacity) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity);
+    public PriorityBlockingQueueService() {
+        priorityBlockingQueue = new PriorityBlockingQueue<>();
     }
 
-    public ArrayBlockingQueueService(int capacity, boolean fair) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity, fair);
+    public PriorityBlockingQueueService(int initialCapacity) {
+        priorityBlockingQueue = new PriorityBlockingQueue<>(initialCapacity);
     }
 
-    public ArrayBlockingQueueService(int capacity, boolean fair, Collection<? extends E> c) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity, fair, c);
+    public PriorityBlockingQueueService(int initialCapacity, Comparator<? super E> comparator) {
+        priorityBlockingQueue = new PriorityBlockingQueue<>(initialCapacity, comparator);
+    }
+
+    public PriorityBlockingQueueService(Collection<? extends E> c) {
+        priorityBlockingQueue = new PriorityBlockingQueue<>(c);
     }
 
     /**
@@ -33,7 +38,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public boolean add(E e) {
-        return arrayBlockingQueue.add(e);
+        return priorityBlockingQueue.add(e);
     }
 
     /**
@@ -43,7 +48,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public void put(E e) throws InterruptedException {
-        arrayBlockingQueue.put(e);
+        priorityBlockingQueue.put(e);
     }
 
     /**
@@ -53,7 +58,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public boolean offer(E e) {
-        return arrayBlockingQueue.offer(e);
+        return priorityBlockingQueue.offer(e);
     }
 
     /**
@@ -66,7 +71,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException {
-        return arrayBlockingQueue.offer(e, timeout, unit);
+        return priorityBlockingQueue.offer(e, timeout, unit);
     }
 
     /**
@@ -75,7 +80,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E remove() {
-        return arrayBlockingQueue.remove();
+        return priorityBlockingQueue.remove();
     }
 
     /**
@@ -85,7 +90,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public E take() throws InterruptedException {
-        return arrayBlockingQueue.take();
+        return priorityBlockingQueue.take();
     }
 
     /**
@@ -94,7 +99,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E poll() {
-        return arrayBlockingQueue.poll();
+        return priorityBlockingQueue.poll();
     }
 
     /**
@@ -106,7 +111,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public E poll(long timeout, TimeUnit unit) throws InterruptedException {
-        return arrayBlockingQueue.poll(timeout, unit);
+        return priorityBlockingQueue.poll(timeout, unit);
     }
 
     /**
@@ -115,7 +120,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E element() {
-        return arrayBlockingQueue.element();
+        return priorityBlockingQueue.element();
     }
 
     /**
@@ -124,7 +129,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E peek() {
-        return arrayBlockingQueue.peek();
+        return priorityBlockingQueue.peek();
     }
 
     /**
@@ -133,6 +138,6 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public int size() {
-        return arrayBlockingQueue.size();
+        return priorityBlockingQueue.size();
     }
 }

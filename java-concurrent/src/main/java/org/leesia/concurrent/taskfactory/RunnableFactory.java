@@ -120,6 +120,12 @@ public class RunnableFactory {
     }
 
     public static Runnable newRunnable(Task task) {
-        return () -> task.compute();
+        return () -> {
+            LOGGER.info("task: {} started, ThreadName: {{}}", task.getTaskName(), task.getThreadName());
+
+            task.compute();
+
+            LOGGER.info("task: {} end, ThreadName: {{}}", task.getTaskName(), task.getThreadName());
+        };
     }
 }

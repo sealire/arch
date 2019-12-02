@@ -69,6 +69,17 @@ public class Task<T, R> implements Serializable {
     public Task(Function<T, R> function, T param) {
         this.function = function;
         this.param = param;
+
+        this.threadName = this.threadName();
+        this.taskName = this.taskName();
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public String getTaskName() {
+        return taskName;
     }
 
     /**
@@ -76,9 +87,6 @@ public class Task<T, R> implements Serializable {
      */
     public R compute() {
         startTime = new Date();
-
-        threadName = getThreadName();
-        taskName = getTaskName();
 
         result = function.apply(param);
 
@@ -96,8 +104,8 @@ public class Task<T, R> implements Serializable {
      *
      * @return
      */
-    private String getThreadName() {
-        return Thread.currentThread().getName();
+    private String threadName() {
+        return "thread-" + RandomUtil.randomNumberString(10);
     }
 
     /**
@@ -105,7 +113,7 @@ public class Task<T, R> implements Serializable {
      *
      * @return
      */
-    private String getTaskName() {
+    private String taskName() {
         return "task-" + RandomUtil.randomNumberString(10);
     }
 }

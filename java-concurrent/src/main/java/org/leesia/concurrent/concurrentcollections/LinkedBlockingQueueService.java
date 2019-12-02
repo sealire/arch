@@ -1,29 +1,29 @@
 package org.leesia.concurrent.concurrentcollections;
 
 import java.util.Collection;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @ClassName: ArrayBlockingQueueService
+ * @ClassName: LinkedBlockingQueueService
  * @Description:
  * @author: leesia
- * @date: 2019/11/27 14:48
+ * @date: 2019/12/2 13:49
  */
-public class ArrayBlockingQueueService<E> {
+public class LinkedBlockingQueueService<E> {
 
-    private ArrayBlockingQueue<E> arrayBlockingQueue;
+    private LinkedBlockingQueue<E> linkedBlockingQueue;
 
-    public ArrayBlockingQueueService(int capacity) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity);
+    public LinkedBlockingQueueService() {
+        linkedBlockingQueue = new LinkedBlockingQueue<>();
     }
 
-    public ArrayBlockingQueueService(int capacity, boolean fair) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity, fair);
+    public LinkedBlockingQueueService(int capacity) {
+        linkedBlockingQueue = new LinkedBlockingQueue<>(capacity);
     }
 
-    public ArrayBlockingQueueService(int capacity, boolean fair, Collection<? extends E> c) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity, fair, c);
+    public LinkedBlockingQueueService(Collection<? extends E> c) {
+        linkedBlockingQueue = new LinkedBlockingQueue<>(c);
     }
 
     /**
@@ -33,7 +33,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public boolean add(E e) {
-        return arrayBlockingQueue.add(e);
+        return linkedBlockingQueue.add(e);
     }
 
     /**
@@ -43,7 +43,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public void put(E e) throws InterruptedException {
-        arrayBlockingQueue.put(e);
+        linkedBlockingQueue.put(e);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public boolean offer(E e) {
-        return arrayBlockingQueue.offer(e);
+        return linkedBlockingQueue.offer(e);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException {
-        return arrayBlockingQueue.offer(e, timeout, unit);
+        return linkedBlockingQueue.offer(e, timeout, unit);
     }
 
     /**
@@ -75,7 +75,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E remove() {
-        return arrayBlockingQueue.remove();
+        return linkedBlockingQueue.remove();
     }
 
     /**
@@ -85,7 +85,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public E take() throws InterruptedException {
-        return arrayBlockingQueue.take();
+        return linkedBlockingQueue.take();
     }
 
     /**
@@ -94,7 +94,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E poll() {
-        return arrayBlockingQueue.poll();
+        return linkedBlockingQueue.poll();
     }
 
     /**
@@ -106,7 +106,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public E poll(long timeout, TimeUnit unit) throws InterruptedException {
-        return arrayBlockingQueue.poll(timeout, unit);
+        return linkedBlockingQueue.poll(timeout, unit);
     }
 
     /**
@@ -115,7 +115,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E element() {
-        return arrayBlockingQueue.element();
+        return linkedBlockingQueue.element();
     }
 
     /**
@@ -124,7 +124,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E peek() {
-        return arrayBlockingQueue.peek();
+        return linkedBlockingQueue.peek();
     }
 
     /**
@@ -133,6 +133,6 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public int size() {
-        return arrayBlockingQueue.size();
+        return linkedBlockingQueue.size();
     }
 }

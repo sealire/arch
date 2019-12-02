@@ -1,59 +1,54 @@
 package org.leesia.concurrent.concurrentcollections;
 
-import java.util.Collection;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @ClassName: ArrayBlockingQueueService
+ * @ClassName: SynchronousQueueService
  * @Description:
  * @author: leesia
- * @date: 2019/11/27 14:48
+ * @date: 2019/12/2 14:03
  */
-public class ArrayBlockingQueueService<E> {
+public class SynchronousQueueService<E> {
 
-    private ArrayBlockingQueue<E> arrayBlockingQueue;
+    private SynchronousQueue<E> synchronousQueue;
 
-    public ArrayBlockingQueueService(int capacity) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity);
+    public SynchronousQueueService() {
+        synchronousQueue = new SynchronousQueue<>();
     }
 
-    public ArrayBlockingQueueService(int capacity, boolean fair) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity, fair);
-    }
-
-    public ArrayBlockingQueueService(int capacity, boolean fair, Collection<? extends E> c) {
-        arrayBlockingQueue = new ArrayBlockingQueue<>(capacity, fair, c);
+    public SynchronousQueueService(boolean fair) {
+        synchronousQueue = new SynchronousQueue<>(fair);
     }
 
     /**
-     * 元素入队，队列满时抛出异常
+     * 元素入队，队列有数据时抛出异常
      *
      * @param e
      * @return
      */
     public boolean add(E e) {
-        return arrayBlockingQueue.add(e);
+        return synchronousQueue.add(e);
     }
 
     /**
-     * 元素入队，队列满时阻塞
+     * 元素入队，队列有数据时阻塞
      *
      * @param e
      * @throws InterruptedException
      */
     public void put(E e) throws InterruptedException {
-        arrayBlockingQueue.put(e);
+        synchronousQueue.put(e);
     }
 
     /**
-     * 元素入队，队列满时返回false
+     * 元素入队，队列有数据时返回false
      *
      * @param e
      * @return
      */
     public boolean offer(E e) {
-        return arrayBlockingQueue.offer(e);
+        return synchronousQueue.offer(e);
     }
 
     /**
@@ -66,7 +61,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException {
-        return arrayBlockingQueue.offer(e, timeout, unit);
+        return synchronousQueue.offer(e, timeout, unit);
     }
 
     /**
@@ -75,7 +70,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E remove() {
-        return arrayBlockingQueue.remove();
+        return synchronousQueue.remove();
     }
 
     /**
@@ -85,7 +80,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public E take() throws InterruptedException {
-        return arrayBlockingQueue.take();
+        return synchronousQueue.take();
     }
 
     /**
@@ -94,7 +89,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E poll() {
-        return arrayBlockingQueue.poll();
+        return synchronousQueue.poll();
     }
 
     /**
@@ -106,7 +101,7 @@ public class ArrayBlockingQueueService<E> {
      * @throws InterruptedException
      */
     public E poll(long timeout, TimeUnit unit) throws InterruptedException {
-        return arrayBlockingQueue.poll(timeout, unit);
+        return synchronousQueue.poll(timeout, unit);
     }
 
     /**
@@ -115,7 +110,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E element() {
-        return arrayBlockingQueue.element();
+        return synchronousQueue.element();
     }
 
     /**
@@ -124,7 +119,7 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public E peek() {
-        return arrayBlockingQueue.peek();
+        return synchronousQueue.peek();
     }
 
     /**
@@ -133,6 +128,6 @@ public class ArrayBlockingQueueService<E> {
      * @return
      */
     public int size() {
-        return arrayBlockingQueue.size();
+        return synchronousQueue.size();
     }
 }
