@@ -1,6 +1,5 @@
 package org.leesia.test.concurrent.concurrentcollections;
 
-import org.leesia.concurrent.concurrentcollections.ArrayBlockingQueueService;
 import org.leesia.concurrent.concurrentcollections.PriorityBlockingQueueService;
 import org.leesia.concurrent.taskfactory.ThreadFactory;
 import org.leesia.concurrent.vo.Person;

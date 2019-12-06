@@ -32,11 +32,13 @@ public class GeneralToolsTest {
     public void testIsEmpty() throws Exception {
         Assert.assertEquals(true, GeneralTools.isEmpty(null));
         Assert.assertEquals(true, GeneralTools.isEmpty(""));
+        Assert.assertEquals(true, GeneralTools.isEmpty(new String[]{}));
         Assert.assertEquals(true, GeneralTools.isEmpty(new ArrayList<String>()));
         Assert.assertEquals(true, GeneralTools.isEmpty(new HashMap<String, String>()));
 
         Assert.assertEquals(false, GeneralTools.isEmpty(new Integer(1)));
         Assert.assertEquals(false, GeneralTools.isEmpty("1"));
+        Assert.assertEquals(false, GeneralTools.isEmpty(new String[]{"1"}));
         Assert.assertEquals(false, GeneralTools.isEmpty(LListUtil.asList(1)));
         Assert.assertEquals(false, GeneralTools.isEmpty(new HashMap<String, String>() {{
             put("name", "pumpkin");

@@ -2,6 +2,8 @@ package org.leesia.util.common;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -26,6 +28,10 @@ public class GeneralTools {
 
         if (o instanceof CharSequence) {
             return StringUtils.isEmpty((CharSequence) o);
+        }
+
+        if (o.getClass().isArray()) {
+            return ((Object[]) o).length == 0;
         }
 
         if (o instanceof Collection) {

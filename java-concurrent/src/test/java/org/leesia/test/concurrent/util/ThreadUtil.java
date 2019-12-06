@@ -1,7 +1,10 @@
 package org.leesia.test.concurrent.util;
 
 import org.leesia.concurrent.taskfactory.RunnableFactory;
+import org.leesia.concurrent.taskfactory.ThreadFactory;
+import org.leesia.concurrent.vo.Task;
 import org.leesia.util.RandomUtil;
+import org.leesia.util.common.GeneralTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +27,7 @@ public class ThreadUtil {
      * @param function
      * @return
      */
+    @Deprecated
     public static Thread[] run(int threadCount, Function function) {
         Thread[] threads = new Thread[threadCount];
         for (int i = 0; i < threadCount; i++) {
@@ -32,6 +36,26 @@ public class ThreadUtil {
             } else {
                 threads[i] = new Thread(RunnableFactory.newRunnable(function), getThreadName());
             }
+        }
+
+        for (Thread thread : threads) {
+            thread.start();
+        }
+
+        return threads;
+    }
+
+    /**
+     * 启动多线程运行
+     *
+     * @param threadCount
+     * @param task
+     * @return
+     */
+    public static Thread[] run(int threadCount, Task task) {
+        Thread[] threads = new Thread[threadCount];
+        for (int i = 0; i < threadCount; i++) {
+            threads[i] = ThreadFactory.newThread(task);
         }
 
         for (Thread thread : threads) {
@@ -92,6 +116,19 @@ public class ThreadUtil {
             Thread.sleep(RandomUtil.randomLong(min, max, true));
         } catch (InterruptedException e) {
             LOGGER.error("Thread: {} interrupted", Thread.currentThread().getName());
+        }
+    }
+
+    public static void join(Thread[] threads) {
+        if (GeneralTools.isEmpty(threads)) {
+            return;
+        }
+        try {
+            for (Thread thread : threads) {
+                thread.join();
+            }
+        } catch (Exception e) {
+            LOGGER.error("join thread error: {}", e.getMessage(), e);
         }
     }
 }
