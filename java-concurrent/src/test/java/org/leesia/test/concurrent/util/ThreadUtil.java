@@ -65,6 +65,19 @@ public class ThreadUtil {
         return threads;
     }
 
+    public static Thread[] run(Task[] tasks) {
+        Thread[] threads = new Thread[tasks.length];
+        for (int i = 0; i < tasks.length; i++) {
+            threads[i] = ThreadFactory.newThread(tasks[i]);
+        }
+
+        for (Thread thread : threads) {
+            thread.start();
+        }
+
+        return threads;
+    }
+
     /**
      * 多线程在线程池中运行
      *

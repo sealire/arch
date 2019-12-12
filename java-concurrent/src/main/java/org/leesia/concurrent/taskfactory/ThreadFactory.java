@@ -1,8 +1,11 @@
 package org.leesia.concurrent.taskfactory;
 
 import org.leesia.concurrent.vo.Task;
+import org.leesia.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.function.Consumer;
 
 /**
  * @ClassName: ThreadFactory
@@ -16,5 +19,13 @@ public class ThreadFactory {
 
     public static Thread newThread(Task task) {
         return new Thread(RunnableFactory.newRunnable(task), task.getThreadName());
+    }
+
+    public static Thread newThread(Consumer consumer) {
+        return new Thread(RunnableFactory.newRunnable(consumer), getThreadName());
+    }
+
+    public static String getThreadName() {
+        return "thread-" + RandomUtil.randomNumberString(10);
     }
 }

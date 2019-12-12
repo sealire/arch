@@ -3,6 +3,7 @@ package org.leesia.concurrent.vo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.leesia.concurrent.taskfactory.ThreadFactory;
 import org.leesia.util.RandomUtil;
 import org.leesia.util.date.LDateUtil;
 import org.slf4j.Logger;
@@ -105,7 +106,7 @@ public class Task<T, R> implements Serializable {
      * @return
      */
     private String threadName() {
-        return "thread-" + RandomUtil.randomNumberString(10);
+        return ThreadFactory.getThreadName();
     }
 
     /**

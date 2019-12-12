@@ -5,6 +5,7 @@ import org.leesia.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -126,6 +127,15 @@ public class RunnableFactory {
             task.compute();
 
             LOGGER.info("task: {} end, ThreadName: {{}}", task.getTaskName(), task.getThreadName());
+        };
+    }
+
+    public static Runnable newRunnable(Consumer consumer) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                consumer.accept(null);
+            }
         };
     }
 }
