@@ -4,10 +4,12 @@ import org.leesia.concurrent.lock.LockSupportService;
 import org.leesia.concurrent.taskfactory.ThreadFactory;
 import org.leesia.test.concurrent.util.ThreadUtil;
 import org.leesia.util.RandomUtil;
+import org.leesia.util.date.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.Consumer;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName: LockSupportTest
@@ -20,7 +22,7 @@ public class LockSupportTest {
     private static Logger LOGGER = LoggerFactory.getLogger(LockSupportTest.class);
 
     public static void main(String[] args) {
-        test_park();
+        test_park_until();
 
         LOGGER.info("main exit");
     }
@@ -62,5 +64,31 @@ public class LockSupportTest {
 
         a.start();
         b.start();
+    }
+
+    public static void test_park_nano() {
+        Thread a = ThreadFactory.newThread(o -> {
+            while (true) {
+                LOGGER.info("park at: {}", new Date());
+                LockSupportService.parkNanos(1000000000);
+                LOGGER.info("unpark at: {}", new Date());
+
+                ThreadUtil.sleep(1000);
+            }
+        });
+        a.start();
+    }
+
+    public static void test_park_until() {
+        Thread a = ThreadFactory.newThread(o -> {
+            while (true) {
+                LOGGER.info("park at: {}", new Date());
+                LockSupportService.parkUntil(DateUtil.future(2, TimeUnit.SECONDS).getTime());
+                LOGGER.info("unpark at: {}", new Date());
+
+                ThreadUtil.sleep(1000);
+            }
+        });
+        a.start();
     }
 }

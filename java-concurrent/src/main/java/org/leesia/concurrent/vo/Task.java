@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.leesia.concurrent.taskfactory.ThreadFactory;
 import org.leesia.util.RandomUtil;
-import org.leesia.util.date.LDateUtil;
+import org.leesia.util.date.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,8 +94,8 @@ public class Task<T, R> implements Serializable {
         endTime = new Date();
 
         logger.info("task: {}, thread: {}, run from: {} to: {}, input: {}, output: {}",
-                taskName, threadName, LDateUtil.format(startTime, "YYYY-MM-dd HH:mm:ss:SSS"),
-                LDateUtil.format(endTime, "YYYY-MM-dd HH:mm:ss:SSS"), param, result);
+                taskName, threadName, DateUtil.format(startTime, "YYYY-MM-dd HH:mm:ss:SSS"),
+                DateUtil.format(endTime, "YYYY-MM-dd HH:mm:ss:SSS"), param, result);
 
         return result;
     }

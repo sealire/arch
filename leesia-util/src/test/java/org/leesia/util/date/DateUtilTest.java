@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author: leesia
  * @date: 2019/11/23 18:01
  */
-public class LDateUtilTest {
+public class DateUtilTest {
 
     @Before
     public void before() throws Exception {
@@ -29,10 +29,10 @@ public class LDateUtilTest {
     @Test
     public void testFormat() throws Exception {
         LocalDateTime date = LocalDateTime.of(2019, 11, 23, 18, 01, 37);
-        String format = LDateUtil.format(date, "");
+        String format = DateUtil.format(date, "");
         Assert.assertEquals("2019-11-23 18:01:37", format);
 
-        format = LDateUtil.format(date, "yyyy-MM-dd");
+        format = DateUtil.format(date, "yyyy-MM-dd");
         Assert.assertEquals("2019-11-23", format);
     }
 } 

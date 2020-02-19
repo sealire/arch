@@ -5,7 +5,9 @@ import org.leesia.util.common.GeneralTools;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName: LDateUtil
@@ -13,7 +15,7 @@ import java.util.Date;
  * @author: leesia
  * @date: 2019/11/22 15:17
  */
-public class LDateUtil {
+public class DateUtil {
 
     /**
      * 默认格式
@@ -60,5 +62,19 @@ public class LDateUtil {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return date.format(formatter);
+    }
+
+    /**
+     * 未来时间
+     *
+     * @param interval 未来多久
+     * @param unit     时间单位
+     * @return
+     */
+    public static Date future(int interval, TimeUnit unit) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MILLISECOND, (int) unit.toMillis(interval));
+        return calendar.getTime();
     }
 }

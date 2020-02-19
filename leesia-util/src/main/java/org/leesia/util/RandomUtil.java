@@ -1,7 +1,7 @@
 package org.leesia.util;
 
 import org.leesia.util.constants.CharacterSet;
-import org.leesia.util.list.LListUtil;
+import org.leesia.util.list.ListUtil;
 
 import java.util.*;
 
@@ -149,7 +149,7 @@ public class RandomUtil {
         List<Character> target = randomSequence(characters, length);
         Collections.shuffle(target);
 
-        return LListUtil.join("", target);
+        return ListUtil.join("", target);
     }
 
     /**
@@ -168,7 +168,7 @@ public class RandomUtil {
         List<Character> target = randomSequence(characters, length);
         Collections.shuffle(target);
 
-        return LListUtil.join("", target);
+        return ListUtil.join("", target);
     }
 
     /**
@@ -187,7 +187,7 @@ public class RandomUtil {
         List<Character> target = randomSequence(characters, length);
         Collections.shuffle(target);
 
-        return LListUtil.join("", target);
+        return ListUtil.join("", target);
     }
 
     /**
@@ -208,7 +208,7 @@ public class RandomUtil {
 
         target = normalizeNumberSequence(target);
 
-        return LListUtil.join("", target);
+        return ListUtil.join("", target);
     }
 
     /**

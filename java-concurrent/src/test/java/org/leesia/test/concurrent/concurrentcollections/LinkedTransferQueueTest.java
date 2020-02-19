@@ -5,7 +5,7 @@ import org.leesia.concurrent.taskfactory.ThreadFactory;
 import org.leesia.concurrent.vo.Task;
 import org.leesia.test.concurrent.util.ThreadUtil;
 import org.leesia.util.RandomUtil;
-import org.leesia.util.date.LDateUtil;
+import org.leesia.util.date.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,9 +36,9 @@ public class LinkedTransferQueueTest {
                 try {
                     String ele = RandomUtil.randomString(10);
 
-                    LOGGER.info("try to transfer ele: {} on {}", ele, LDateUtil.format(new Date(), null));
+                    LOGGER.info("try to transfer ele: {} on {}", ele, DateUtil.format(new Date(), null));
                     service.transfer(ele);
-                    LOGGER.info("transfer ele: {} on {}", ele, LDateUtil.format(new Date(), null));
+                    LOGGER.info("transfer ele: {} on {}", ele, DateUtil.format(new Date(), null));
 
                     ThreadUtil.sleepRandom(1000, 10000);
                 } catch (Exception e) {
@@ -52,9 +52,9 @@ public class LinkedTransferQueueTest {
         Task<LinkedTransferQueueService<String>, Integer> takeTask = new Task<>(service -> {
             for (int i = 0; i < 20; i++) {
                 try {
-                    LOGGER.info("try to take ele on {}", LDateUtil.format(new Date(), null));
+                    LOGGER.info("try to take ele on {}", DateUtil.format(new Date(), null));
                     String ele = service.take();
-                    LOGGER.info("ele take: {} on {}", ele, LDateUtil.format(new Date(), null));
+                    LOGGER.info("ele take: {} on {}", ele, DateUtil.format(new Date(), null));
 
                     ThreadUtil.sleepRandom(1000, 10000);
                 } catch (Exception e) {
@@ -78,9 +78,9 @@ public class LinkedTransferQueueTest {
                 try {
                     String ele = RandomUtil.randomString(10);
 
-                    LOGGER.info("try to transfer ele: {} on {}", ele, LDateUtil.format(new Date(), null));
+                    LOGGER.info("try to transfer ele: {} on {}", ele, DateUtil.format(new Date(), null));
                     service.tryTransfer(ele);
-                    LOGGER.info("transfer ele: {} on {}, size: {}", ele, LDateUtil.format(new Date(), null), service.size());
+                    LOGGER.info("transfer ele: {} on {}, size: {}", ele, DateUtil.format(new Date(), null), service.size());
 
                     ThreadUtil.sleepRandom(1000, 10000);
                 } catch (Exception e) {
@@ -94,9 +94,9 @@ public class LinkedTransferQueueTest {
         Task<LinkedTransferQueueService<String>, Integer> takeTask = new Task<>(service -> {
             for (int i = 0; i < 20; i++) {
                 try {
-                    LOGGER.info("try to take ele on {}", LDateUtil.format(new Date(), null));
+                    LOGGER.info("try to take ele on {}", DateUtil.format(new Date(), null));
                     String ele = service.take();
-                    LOGGER.info("ele take: {} on {}", ele, LDateUtil.format(new Date(), null));
+                    LOGGER.info("ele take: {} on {}", ele, DateUtil.format(new Date(), null));
 
                     ThreadUtil.sleepRandom(1000, 10000);
                 } catch (Exception e) {
@@ -120,9 +120,9 @@ public class LinkedTransferQueueTest {
                 try {
                     String ele = RandomUtil.randomString(10);
 
-                    LOGGER.info("try to transfer ele: {} on {}", ele, LDateUtil.format(new Date(), null));
+                    LOGGER.info("try to transfer ele: {} on {}", ele, DateUtil.format(new Date(), null));
                     boolean added = service.tryTransfer(ele, RandomUtil.randomLong(100, 1000, true), TimeUnit.MILLISECONDS);
-                    LOGGER.info("transfer ele: {} on {}, size: {}", (added ? ele : null), LDateUtil.format(new Date(), null), service.size());
+                    LOGGER.info("transfer ele: {} on {}, size: {}", (added ? ele : null), DateUtil.format(new Date(), null), service.size());
 
                     ThreadUtil.sleepRandom(1000, 10000);
                 } catch (Exception e) {
@@ -136,9 +136,9 @@ public class LinkedTransferQueueTest {
         Task<LinkedTransferQueueService<String>, Integer> takeTask = new Task<>(service -> {
             for (int i = 0; i < 20; i++) {
                 try {
-                    LOGGER.info("try to take ele on {}", LDateUtil.format(new Date(), null));
+                    LOGGER.info("try to take ele on {}", DateUtil.format(new Date(), null));
                     String ele = service.take();
-                    LOGGER.info("ele take: {} on {}", ele, LDateUtil.format(new Date(), null));
+                    LOGGER.info("ele take: {} on {}", ele, DateUtil.format(new Date(), null));
 
                     ThreadUtil.sleepRandom(1000, 10000);
                 } catch (Exception e) {

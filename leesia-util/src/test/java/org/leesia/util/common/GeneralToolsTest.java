@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.leesia.util.list.LListUtil;
+import org.leesia.util.list.ListUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class GeneralToolsTest {
         Assert.assertEquals(false, GeneralTools.isEmpty(new Integer(1)));
         Assert.assertEquals(false, GeneralTools.isEmpty("1"));
         Assert.assertEquals(false, GeneralTools.isEmpty(new String[]{"1"}));
-        Assert.assertEquals(false, GeneralTools.isEmpty(LListUtil.asList(1)));
+        Assert.assertEquals(false, GeneralTools.isEmpty(ListUtil.asList(1)));
         Assert.assertEquals(false, GeneralTools.isEmpty(new HashMap<String, String>() {{
             put("name", "pumpkin");
         }}));
@@ -57,7 +57,7 @@ public class GeneralToolsTest {
 
         Assert.assertEquals(true, GeneralTools.isNotEmpty(new Integer(1)));
         Assert.assertEquals(true, GeneralTools.isNotEmpty("1"));
-        Assert.assertEquals(true, GeneralTools.isNotEmpty(LListUtil.asList(1)));
+        Assert.assertEquals(true, GeneralTools.isNotEmpty(ListUtil.asList(1)));
         Assert.assertEquals(true, GeneralTools.isNotEmpty(new HashMap<String, String>() {{
             put("name", "pumpkin");
         }}));

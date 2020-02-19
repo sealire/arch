@@ -12,7 +12,7 @@ import java.util.List;
  * @author: leesia
  * @date: 2019/11/22 15:17
  */
-public class LListUtil {
+public class ListUtil {
 
     /**
      * 连接List中各元素，并返回连接后的字符串

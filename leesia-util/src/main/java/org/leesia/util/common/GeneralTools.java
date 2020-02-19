@@ -2,8 +2,6 @@ package org.leesia.util.common;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 

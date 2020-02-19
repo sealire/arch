@@ -3,7 +3,7 @@ package org.leesia.test.concurrent.concurrentcollections;
 import org.leesia.concurrent.concurrentcollections.DelayQueueService;
 import org.leesia.util.RandomUtil;
 import org.leesia.util.base.BaseObject;
-import org.leesia.util.date.LDateUtil;
+import org.leesia.util.date.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public class DelayQueueTest {
                 DelayTask delayTask = new DelayTask(RandomUtil.randomString(10), RandomUtil.randomLong(1000, 5000, true));
 
                 delayQueueService.add(delayTask);
-                LOGGER.info("add ele: {} on {}", delayTask, LDateUtil.format(new Date(), null));
+                LOGGER.info("add ele: {} on {}", delayTask, DateUtil.format(new Date(), null));
             } catch (Exception e) {
                 LOGGER.error("queue add error: {}", e.getMessage(), e);
             }
@@ -44,7 +44,7 @@ public class DelayQueueTest {
         for (int i = 0; i < 20; i++) {
             try {
                 DelayTask ele = delayQueueService.take();
-                LOGGER.info("ele take: {} on {}", ele, LDateUtil.format(new Date(), null));
+                LOGGER.info("ele take: {} on {}", ele, DateUtil.format(new Date(), null));
             } catch (Exception e) {
                 LOGGER.error("queue take error: {}", e.getMessage(), e);
             }

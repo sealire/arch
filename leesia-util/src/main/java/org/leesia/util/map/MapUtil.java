@@ -7,7 +7,7 @@ package org.leesia.util.map;
  * @author: leesia
  * @date: 2019/11/23 18:14
  */
-public class LMapUtil {
+public class MapUtil {
 
 
 }

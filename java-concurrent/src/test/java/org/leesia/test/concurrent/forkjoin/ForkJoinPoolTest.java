@@ -6,7 +6,7 @@ import org.leesia.concurrent.forkjoin.ForkJoinPoolService;
 import org.leesia.concurrent.taskfactory.RunnableFactory;
 import org.leesia.concurrent.vo.Task;
 import org.leesia.test.concurrent.util.ThreadUtil;
-import org.leesia.util.list.LListUtil;
+import org.leesia.util.list.ListUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +48,7 @@ public class ForkJoinPoolTest {
      */
     public static void test_execute_RecursiveAction() {
         List<Integer> nums = org.leesia.test.concurrent.util.ListUtil.randomNumberList(1, 1000, 100);
-        Task<List<Integer>, Long> task = new Task<>(LListUtil::sum, nums);
+        Task<List<Integer>, Long> task = new Task<>(ListUtil::sum, nums);
 
         CustomRecursiveAction action = new CustomRecursiveAction<>(Task::compute, task);
         pool.execute(action);
@@ -64,7 +64,7 @@ public class ForkJoinPoolTest {
      */
     public static void test_submit_RecursiveAction() {
         List<Integer> nums = org.leesia.test.concurrent.util.ListUtil.randomNumberList(1, 1000, 100);
-        Task<List<Integer>, Long> task = new Task<>(LListUtil::sum, nums);
+        Task<List<Integer>, Long> task = new Task<>(ListUtil::sum, nums);
 
         CustomRecursiveAction<List<Integer>, Long> action = new CustomRecursiveAction<>();
         action.setConsumer(new Consumer<Task<List<Integer>, Long>>() {
@@ -84,7 +84,7 @@ public class ForkJoinPoolTest {
      */
     public static void test_execute_RecursiveTask() throws ExecutionException, InterruptedException {
         List<Integer> nums = org.leesia.test.concurrent.util.ListUtil.randomNumberList(1, 1000, 100);
-        Task<List<Integer>, Long> task = new Task<>(LListUtil::sum, nums);
+        Task<List<Integer>, Long> task = new Task<>(ListUtil::sum, nums);
 
         CustomRecursiveTask action = new CustomRecursiveTask<>(Task::compute, task);
         pool.execute(action);
@@ -99,7 +99,7 @@ public class ForkJoinPoolTest {
      */
     public static void test_submit_RecursiveTask() {
         List<Integer> nums = org.leesia.test.concurrent.util.ListUtil.randomNumberList(1, 1000, 100);
-        Task<List<Integer>, Long> task = new Task<>(LListUtil::sum, nums);
+        Task<List<Integer>, Long> task = new Task<>(ListUtil::sum, nums);
 
         CustomRecursiveTask<List<Integer>, Long> action = new CustomRecursiveTask<>();
         action.setFunction(new Function<Task<List<Integer>, Long>, Long>() {

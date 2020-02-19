@@ -6,7 +6,7 @@ import org.leesia.concurrent.vo.Person;
 import org.leesia.concurrent.vo.Task;
 import org.leesia.test.concurrent.util.ThreadUtil;
 import org.leesia.util.RandomUtil;
-import org.leesia.util.date.LDateUtil;
+import org.leesia.util.date.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,9 +36,9 @@ public class PriorityBlockingQueueTest {
                 try {
                     Person person = new Person(RandomUtil.randomString(10), RandomUtil.randomInt(10, 60, true), RandomUtil.randomString(10));
 
-                    LOGGER.info("try to put ele: {} on {}", person, LDateUtil.format(new Date(), null));
+                    LOGGER.info("try to put ele: {} on {}", person, DateUtil.format(new Date(), null));
                     service.put(person);
-                    LOGGER.info("put ele: {} on {}", person, LDateUtil.format(new Date(), null));
+                    LOGGER.info("put ele: {} on {}", person, DateUtil.format(new Date(), null));
 
                     ThreadUtil.sleepRandom(1000, 3000);
                 } catch (Exception e) {
@@ -52,9 +52,9 @@ public class PriorityBlockingQueueTest {
         Task<PriorityBlockingQueueService<Person>, Integer> takeTask = new Task<>(service -> {
             for (int i = 0; i < 20; i++) {
                 try {
-                    LOGGER.info("try to take ele on {}", LDateUtil.format(new Date(), null));
+                    LOGGER.info("try to take ele on {}", DateUtil.format(new Date(), null));
                     Person person = service.take();
-                    LOGGER.info("ele take: {} on {}", person, LDateUtil.format(new Date(), null));
+                    LOGGER.info("ele take: {} on {}", person, DateUtil.format(new Date(), null));
 
                     ThreadUtil.sleepRandom(2000, 10000);
                 } catch (Exception e) {
